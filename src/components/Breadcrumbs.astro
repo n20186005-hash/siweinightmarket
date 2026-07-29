@@ -1,0 +1,28 @@
+---
+interface Item {
+  label: string;
+  href?: string;
+}
+
+interface Props {
+  items: Item[];
+  dark?: boolean;
+}
+
+const { items, dark = false } = Astro.props;
+---
+<nav aria-label="麵包屑" class:list={['text-sm', dark ? 'text-white/55' : 'text-slate-500']}>
+  <ol class="flex flex-wrap items-center gap-2">
+    <li><a href="/" class:list={['font-bold', dark ? 'hover:text-white' : 'hover:text-market-600']}>首頁</a></li>
+    {items.map((item) => (
+      <>
+        <li aria-hidden="true" class={dark ? 'text-white/25' : 'text-slate-300'}>/</li>
+        <li>
+          {item.href
+            ? <a href={item.href} class:list={['font-bold', dark ? 'hover:text-white' : 'hover:text-market-600']}>{item.label}</a>
+            : <span aria-current="page">{item.label}</span>}
+        </li>
+      </>
+    ))}
+  </ol>
+</nav>

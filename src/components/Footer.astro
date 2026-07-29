@@ -1,0 +1,47 @@
+---
+import { site } from '../data/site';
+---
+<footer class="bg-night-950 pb-24 pt-16 text-white md:pb-10">
+  <div class="container-site grid gap-10 md:grid-cols-[1.3fr_.7fr_.7fr]">
+    <div>
+      <div class="mb-4 flex items-center gap-3"><span class="grid size-11 place-items-center rounded-full bg-lantern-400 font-black text-night-950">四</span><strong class="text-xl">四維夜市</strong></div>
+      <p class="max-w-md leading-7 text-white/65">提供台東四維夜市的地點、營業日、美食與交通整理。本站為獨立旅遊資訊網站，非夜市或攤販協會官方網站。</p>
+    </div>
+    <div>
+      <h2 class="mb-4 font-bold text-lantern-300">快速前往</h2>
+      <ul class="space-y-3 text-sm text-white/65">
+        <li><a class="hover:text-white" href="/#status">目前位置</a></li>
+        <li><a class="hover:text-white" href="/food/">人氣美食</a></li>
+        <li><a class="hover:text-white" href="/transport/">交通停車</a></li>
+        <li><a class="hover:text-white" href="/nearby/">周邊行程</a></li>
+        <li><a class="hover:text-white" href="/#faq">常見問題</a></li>
+      </ul>
+    </div>
+    <div>
+      <h2 class="mb-4 font-bold text-lantern-300">網站資訊</h2>
+      <ul class="space-y-3 text-sm text-white/65">
+        <li><a class="hover:text-white" href="/about/">關於與照片來源</a></li>
+        <li><a class="hover:text-white" href="/privacy/">隱私權政策</a></li>
+        <li><a class="hover:text-white" href="/terms/">使用條款</a></li>
+        <li><a class="hover:text-white" href={site.mapUrl} target="_blank" rel="noopener noreferrer">Google 地圖導航</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="container-site mt-12 border-t border-white/10 pt-6 text-xs text-white/40">© {new Date().getFullYear()} {site.domain}. 本站不保證每一攤每週固定出攤，請以現場與當週公告為準。</div>
+</footer>
+
+<div class="fixed inset-x-0 bottom-0 z-50 border-t border-black/10 bg-rice-50/96 p-3 shadow-[0_-8px_30px_rgba(7,17,31,.12)] backdrop-blur md:hidden">
+  <div class="mx-auto grid max-w-lg grid-cols-3 gap-2">
+    <a href="/food/" class="rounded-xl border border-night-900/15 px-2 py-3 text-center text-xs font-black text-night-900">必吃指南</a>
+    <a href="/transport/" class="rounded-xl border border-night-900/15 px-2 py-3 text-center text-xs font-black text-night-900">交通停車</a>
+    <a href={site.mapUrl} target="_blank" rel="noopener noreferrer" class="rounded-xl bg-market-600 px-2 py-3 text-center text-xs font-black text-white" data-ga-event="map_sticky">地圖導航</a>
+  </div>
+</div>
+
+<script is:inline>
+  document.querySelectorAll('[data-ga-event]').forEach((el) => {
+    el.addEventListener('click', () => {
+      if (typeof window.gtag === 'function') window.gtag('event', el.dataset.gaEvent, { event_category: 'navigation' });
+    });
+  });
+</script>

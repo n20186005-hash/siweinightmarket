@@ -1,0 +1,93 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import { foods, site, visitSteps } from '../data/site';
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: '首頁', item: site.url },
+    { '@type': 'ListItem', position: 2, name: '美食指南', item: `${site.url}/food/` }
+  ]
+};
+
+const groups = ['主食', '鐵板', '小吃', '炸物', '甜點', '飲品'];
+---
+<BaseLayout title="四維夜市美食指南｜主食、炸物、甜點怎麼吃" description="整理台東四維夜市的美食選擇與逛吃順序，從主食、分食炸物到甜點飲料，幫你安排一晚的胃口。">
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  <section class="bg-night-950 py-16 text-white sm:py-20">
+    <div class="container-site max-w-5xl">
+      <Breadcrumbs dark items={[{ label: '美食指南' }]} />
+      <p class="mt-10 text-xs font-black tracking-[.18em] text-lantern-300">FOOD GUIDE</p>
+      <h1 class="serif-tc mt-3 max-w-3xl text-4xl font-black leading-tight sm:text-6xl">不用一次吃完，<br />照順序更能吃到重點</h1>
+      <p class="mt-6 max-w-2xl text-lg leading-8 text-white/65">先選一份主食，再和同行者共享炸物，最後用甜點飲料收尾。這份指南提供找攤方向，不把流動攤位寫成每週固定名單。</p>
+    </div>
+  </section>
+
+  <section class="section-space bg-rice-50">
+    <div class="container-site">
+      <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        {visitSteps.map(({ step, title, copy }) => (
+          <article class="rounded-3xl border border-night-900/10 bg-white p-6">
+            <span class="text-sm font-black text-market-600">{step}</span>
+            <h2 class="mt-2 text-xl font-black text-night-950">{title}</h2>
+            <p class="mt-3 text-sm leading-7 text-slate-600">{copy}</p>
+          </article>
+        ))}
+      </div>
+
+      <div class="mt-16 flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <p class="eyebrow">WHAT TO LOOK FOR</p>
+          <h2 class="serif-tc mt-3 text-3xl font-black text-night-950 sm:text-5xl">10 個人氣找攤方向</h2>
+        </div>
+        <p class="max-w-xl text-sm leading-7 text-slate-600">名單用來協助現場選擇；攤名、出攤狀況、品項與價格仍以當晚現場為準。</p>
+      </div>
+
+      <div class="mt-9 flex flex-wrap gap-2" aria-label="美食類型">
+        {groups.map((group) => <span class="rounded-full border border-night-900/10 bg-white px-4 py-2 text-sm font-bold text-night-900">{group}</span>)}
+      </div>
+
+      <div class="mt-8 grid gap-5 md:grid-cols-2">
+        {foods.map((food, index) => (
+          <article class="grid gap-5 rounded-3xl border border-night-900/8 bg-white p-6 sm:grid-cols-[4rem_1fr]">
+            <div class="grid size-14 place-items-center rounded-2xl bg-lantern-400 text-xl font-black text-night-950">{String(index + 1).padStart(2, '0')}</div>
+            <div>
+              <div class="flex flex-wrap items-center gap-2">
+                <h3 class="text-xl font-black text-night-950">{food.name}</h3>
+                <span class="rounded-full bg-rice-100 px-2.5 py-1 text-xs font-bold text-market-600">{food.type}</span>
+              </div>
+              <p class="mt-3 leading-7 text-slate-600">{food.note}</p>
+              <dl class="mt-4 flex flex-wrap gap-2 text-xs font-bold">
+                <div class="rounded-full bg-night-950 px-3 py-1.5 text-white"><dt class="sr-only">建議輪次</dt><dd>{food.round}</dd></div>
+                <div class="rounded-full bg-rice-100 px-3 py-1.5 text-night-900"><dt class="sr-only">適合情境</dt><dd>{food.bestFor}</dd></div>
+                {food.shareable && <div class="rounded-full bg-market-600/10 px-3 py-1.5 text-market-600"><dt class="sr-only">分食建議</dt><dd>適合分食</dd></div>}
+              </dl>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section-space bg-white">
+    <div class="container-site grid gap-8 lg:grid-cols-2">
+      <article class="rounded-[2rem] bg-night-900 p-8 text-white">
+        <p class="text-xs font-black tracking-[.16em] text-lantern-300">BUDGET & PAYMENT</p>
+        <h2 class="mt-3 text-2xl font-black">現金要帶，預算自己留彈性</h2>
+        <ul class="mt-6 space-y-3 text-sm leading-7 text-white/70">
+          <li>・各攤收款方式不同，不預設都能刷卡或使用行動支付。</li>
+          <li>・先看標價再點餐；本站不引用可能快速過期的固定價格。</li>
+          <li>・多人同行先共享大份炸物，通常比每人各買更能多試幾攤。</li>
+        </ul>
+      </article>
+      <article class="rounded-[2rem] bg-lantern-400 p-8 text-night-950">
+        <p class="text-xs font-black tracking-[.16em] text-market-600">BEFORE YOU GO</p>
+        <h2 class="mt-3 text-2xl font-black">出發前先確認當週狀況</h2>
+        <p class="mt-4 leading-7 text-night-950/70">露天夜市可能受天候或活動調整影響。若你是為特定攤位前往，建議直接查找該攤公開資訊，不要只依靠歷年食記。</p>
+        <a href={site.officialNoticeUrl} target="_blank" rel="noopener noreferrer" class="mt-6 inline-flex rounded-full bg-night-950 px-5 py-3 text-sm font-black text-white">查看夜市公開公告</a>
+      </article>
+    </div>
+  </section>
+</BaseLayout>

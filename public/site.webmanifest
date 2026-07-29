@@ -1,0 +1,11 @@
+{
+  "name": "台東四維夜市",
+  "short_name": "四維夜市",
+  "description": "台東週日限定夜市行前指南",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#fffaf0",
+  "theme_color": "#07111f",
+  "lang": "zh-Hant-TW",
+  "icons": [{ "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml" }]
+}

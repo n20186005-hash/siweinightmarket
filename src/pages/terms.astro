@@ -1,0 +1,38 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import { site } from '../data/site';
+---
+<BaseLayout title="使用條款｜四維夜市" description="SiweiNightMarket.com 的網站身份、資訊限制、外部連結與照片使用說明。">
+  <section class="bg-night-950 py-16 text-white sm:py-20">
+    <div class="container-site max-w-4xl">
+      <Breadcrumbs dark items={[{ label: '使用條款' }]} />
+      <h1 class="serif-tc mt-10 text-4xl font-black sm:text-6xl">使用條款</h1>
+      <p class="mt-6 max-w-2xl text-lg leading-8 text-white/65">使用本網站前，請了解本站是獨立旅遊資訊指南，內容用於協助行程規劃，不構成官方即時公告或服務承諾。</p>
+    </div>
+  </section>
+  <section class="section-space bg-rice-50">
+    <div class="container-site prose-readable max-w-4xl space-y-10 text-slate-700">
+      <article>
+        <h2 class="text-2xl font-black text-night-950">網站身份</h2>
+        <p class="mt-4">{site.domain} 並非四維夜市、臺東縣政府、臺東市公所或攤販組織的官方網站，也不代表任何攤商發言。</p>
+      </article>
+      <article>
+        <h2 class="text-2xl font-black text-night-950">資訊限制</h2>
+        <p class="mt-4">夜市屬露天流動場域。營業狀況、攤位、品項、價格、道路與停車安排可能因天候、活動或現場決定而變動。本站提供的例行時間和行程建議不能取代當週公告與現場指示。</p>
+      </article>
+      <article>
+        <h2 class="text-2xl font-black text-night-950">外部連結與地圖</h2>
+        <p class="mt-4">本站連結至 Google 地圖與公開社群頁，方便查找位置和公告。第三方內容、可用性與資料處理由各服務自行負責；離開本站後請依其條款與隱私政策使用。</p>
+      </article>
+      <article>
+        <h2 class="text-2xl font-black text-night-950">照片與內容</h2>
+        <p class="mt-4">頁面會明確區分舊場地紀錄與一般台東夜市情境照片，不以舊照片證明目前位置的現場狀況。文字、設計與自有素材未經允許不得整頁重製；開放授權照片仍依原授權條件使用。</p>
+      </article>
+      <article class="rounded-3xl bg-white p-7">
+        <h2 class="text-xl font-black text-night-950">發現錯誤時</h2>
+        <p class="mt-3 leading-7 text-slate-600">若位置、營業日或照片標示與現況不符，站方應優先修正會讓旅客白跑或誤認地點的資訊，並保留可核對的來源紀錄。</p>
+      </article>
+    </div>
+  </section>
+</BaseLayout>

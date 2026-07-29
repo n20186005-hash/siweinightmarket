@@ -1,0 +1,103 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import { site, transportTips } from '../data/site';
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'WebPage',
+      name: '四維夜市交通與停車指南',
+      url: `${site.url}/transport/`,
+      about: { '@id': `${site.url}/#attraction` },
+      inLanguage: 'zh-Hant-TW'
+    },
+    {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: '首頁', item: site.url },
+        { '@type': 'ListItem', position: 2, name: '交通停車', item: `${site.url}/transport/` }
+      ]
+    }
+  ]
+};
+---
+<BaseLayout title="四維夜市交通與停車｜四維路底目前位置導航" description="台東四維夜市目前位於四維路底、TAITUNG 英文字母地標附近。查看精確地圖、停車思路、晚間回程與天候提醒。">
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  <section class="bg-night-950 py-16 text-white sm:py-20">
+    <div class="container-site max-w-5xl">
+      <Breadcrumbs dark items={[{ label: '交通停車' }]} />
+      <p class="mt-10 text-xs font-black tracking-[.18em] text-lantern-300">TRANSPORT</p>
+      <h1 class="serif-tc mt-3 max-w-4xl text-4xl font-black leading-tight sm:text-6xl">導航請選「四維路底」，<br />不要被舊文章帶回舊址</h1>
+      <p class="mt-6 max-w-2xl text-lg leading-8 text-white/65">目前位置靠近台東海濱公園與 TAITUNG 英文字母地標。以下整理自駕、停車、回程與沿海天候的實用判斷。</p>
+    </div>
+  </section>
+
+  <section class="section-space bg-rice-50">
+    <div class="container-site grid gap-10 lg:grid-cols-[.85fr_1.15fr]">
+      <div>
+        <div class="rounded-3xl border border-market-500/20 bg-white p-7">
+          <p class="text-xs font-black tracking-[.16em] text-market-600">CURRENT LOCATION</p>
+          <h2 class="mt-3 text-3xl font-black text-night-950">四維路底</h2>
+          <p class="mt-3 leading-7 text-slate-600">TAITUNG 英文字母地標附近、台東海濱公園旁。</p>
+          <dl class="mt-6 grid grid-cols-2 gap-3 text-sm">
+            <div class="rounded-2xl bg-rice-100 p-4"><dt class="text-slate-500">緯度</dt><dd class="mt-1 font-black text-night-950">{site.latitude}</dd></div>
+            <div class="rounded-2xl bg-rice-100 p-4"><dt class="text-slate-500">經度</dt><dd class="mt-1 font-black text-night-950">{site.longitude}</dd></div>
+          </dl>
+          <a href={site.mapUrl} target="_blank" rel="noopener noreferrer" class="mt-6 block rounded-full bg-lantern-400 px-5 py-3.5 text-center font-black text-night-950" data-ga-event="map_transport_page">用 Google 地圖導航</a>
+        </div>
+
+        <div class="mt-5 rounded-3xl bg-night-900 p-7 text-white">
+          <h2 class="text-xl font-black">看到「四維路一段」先停一下</h2>
+          <p class="mt-3 text-sm leading-7 text-white/65">部分舊遊記與搜尋結果可能仍保留搬遷前位置。請比對座標與 TAITUNG 地標，避免只輸入舊門牌。</p>
+        </div>
+      </div>
+
+      <div class="overflow-hidden rounded-[2rem] bg-night-900 shadow-xl">
+        <iframe
+          src={site.mapEmbedUrl}
+          title="四維夜市目前位置 Google 地圖"
+          width="600"
+          height="450"
+          class="block min-h-[26rem] w-full border-0"
+          style="border:0;"
+          allowfullscreen
+          loading="lazy"
+          referrerpolicy="strict-origin-when-cross-origin"
+        ></iframe>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-space bg-white">
+    <div class="container-site">
+      <div class="max-w-2xl">
+        <p class="eyebrow">HOW TO ARRIVE</p>
+        <h2 class="serif-tc mt-3 text-3xl font-black text-night-950 sm:text-5xl">選交通方式前，先想回程</h2>
+      </div>
+      <div class="mt-10 grid gap-5 md:grid-cols-2">
+        {transportTips.map(({ num, title, copy }) => (
+          <article class="grid grid-cols-[3rem_1fr] gap-4 rounded-3xl border border-slate-200 p-6">
+            <span class="font-black text-lantern-500">{num}</span>
+            <div><h3 class="text-xl font-black text-night-950">{title}</h3><p class="mt-3 leading-7 text-slate-600">{copy}</p></div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section-space bg-rice-100">
+    <div class="container-site grid gap-8 lg:grid-cols-[1fr_.9fr]">
+      <div>
+        <p class="eyebrow">RETURN CHECKLIST</p>
+        <h2 class="serif-tc mt-3 text-3xl font-black text-night-950">逛之前先完成四件事</h2>
+      </div>
+      <ol class="space-y-3">
+        {['把正確地點儲存到手機地圖', '記住停車位置或拍下周邊地標', '確認晚間回程，不只依賴末班公車', '出發前查看天候與當週公開公告'].map((item, index) => (
+          <li class="flex items-center gap-4 rounded-2xl bg-white p-4 font-bold text-night-950"><span class="grid size-9 shrink-0 place-items-center rounded-full bg-market-600 text-sm text-white">{index + 1}</span>{item}</li>
+        ))}
+      </ol>
+    </div>
+  </section>
+</BaseLayout>

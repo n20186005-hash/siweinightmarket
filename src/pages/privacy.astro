@@ -1,0 +1,13 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+---
+<BaseLayout title="隱私權政策｜四維夜市" description="SiweiNightMarket.com 隱私權與網站分析工具說明。">
+  <section class="bg-night-950 py-20 text-white"><div class="container-site max-w-4xl"><Breadcrumbs dark items={[{ label: '隱私權政策' }]} /><h1 class="serif-tc mt-10 text-4xl font-black sm:text-6xl">隱私權政策</h1><p class="mt-5 text-white/60">說明本站使用的分析工具與資料處理範圍。</p></div></section>
+  <section class="section-space"><div class="container-site prose-readable max-w-4xl space-y-10 text-slate-700">
+    <article><h2 class="text-2xl font-black text-night-950">網站分析</h2><p class="mt-4">本站使用 Google Analytics 4（評估 ID：G-HXM22WWPKP）了解匿名化的頁面瀏覽、裝置類型與互動情況，以改善內容與導覽。Google 可能透過 Cookie 或類似技術處理資料。</p></article>
+    <article><h2 class="text-2xl font-black text-night-950">本站不收集的資料</h2><p class="mt-4">本站沒有會員系統、資料庫、登入、留言、訂位或付款功能，也不主動要求姓名、電話、電子郵件或身分證明資料。</p></article>
+    <article><h2 class="text-2xl font-black text-night-950">外部導航</h2><p class="mt-4">點擊 Google 地圖導航後，將進入第三方服務，其資料處理方式由該服務的隱私政策規範。</p></article>
+    <article><h2 class="text-2xl font-black text-night-950">政策調整</h2><p class="mt-4">若網站功能或分析工具變更，本頁會同步更新日期與內容。</p></article>
+  </div></section>
+</BaseLayout>

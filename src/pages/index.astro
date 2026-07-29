@@ -1,0 +1,386 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { site, foods, faqs, visitFacts, visitSteps, transportTips, routePlans } from '../data/site';
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'WebSite',
+      '@id': `${site.url}/#website`,
+      url: site.url,
+      name: '四維夜市',
+      inLanguage: 'zh-Hant-TW'
+    },
+    {
+      '@type': 'WebPage',
+      '@id': `${site.url}/#webpage`,
+      url: site.url,
+      name: '台東四維夜市｜週日限定美食、目前位置、停車與交通指南',
+      description: site.description,
+      inLanguage: 'zh-Hant-TW',
+      isPartOf: { '@id': `${site.url}/#website` },
+      about: { '@id': `${site.url}/#attraction` },
+      primaryImageOfPage: { '@id': `${site.url}/#primaryimage` }
+    },
+    {
+      '@type': 'ImageObject',
+      '@id': `${site.url}/#primaryimage`,
+      url: `${site.url}/images/siwei-night-market-hero.webp`,
+      width: 1290,
+      height: 860,
+      caption: '四維夜市搬遷前場地的夜間實景紀錄'
+    },
+    {
+      '@type': 'TouristAttraction',
+      '@id': `${site.url}/#attraction`,
+      name: '台東四維夜市',
+      alternateName: ['四維夜市', '四維路夜市'],
+      description: '每週日營業的台東在地型露天夜市，包含小吃、遊戲與生活雜貨攤位。',
+      url: site.url,
+      isAccessibleForFree: true,
+      image: `${site.url}/og.jpg`,
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: '四維路底（TAITUNG 英文字母地標附近）',
+        addressLocality: '臺東市',
+        addressRegion: '臺東縣',
+        addressCountry: 'TW'
+      },
+      geo: {
+        '@type': 'GeoCoordinates',
+        latitude: site.latitude,
+        longitude: site.longitude
+      }
+    },
+    {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: '首頁', item: site.url }
+      ]
+    },
+    {
+      '@type': 'FAQPage',
+      mainEntity: faqs.map(([question, answer]) => ({
+        '@type': 'Question',
+        name: question,
+        acceptedAnswer: { '@type': 'Answer', text: answer }
+      }))
+    }
+  ]
+};
+---
+<BaseLayout>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+
+  <section class="relative isolate min-h-[78svh] overflow-hidden bg-night-950 text-white">
+    <img src="/images/siwei-night-market-hero.webp" alt="台東四維夜市舊場地夜間攤位與人潮實景" width="1290" height="860" fetchpriority="high" class="absolute inset-0 h-full w-full object-cover object-center" />
+    <div class="absolute inset-0 bg-[linear-gradient(90deg,rgba(7,17,31,.94)_0%,rgba(7,17,31,.72)_46%,rgba(7,17,31,.22)_100%)]"></div>
+    <div class="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-night-950 to-transparent"></div>
+    <div class="container-site relative flex min-h-[78svh] items-center py-20">
+      <div class="max-w-3xl">
+        <div class="mb-6 inline-flex items-center gap-2 rounded-full border border-lantern-300/40 bg-night-950/45 px-4 py-2 text-sm font-bold text-lantern-300 backdrop-blur">
+          <span class="size-2 animate-pulse rounded-full bg-lantern-400"></span>
+          台東・每週日限定
+        </div>
+        <h1 class="serif-tc text-5xl font-black tracking-tight sm:text-6xl lg:text-8xl">四維夜市</h1>
+        <p class="mt-6 max-w-2xl text-lg font-medium leading-8 text-white/85 sm:text-xl">只有星期日，才看得到的台東夜生活。從在地小吃、鐵板牛排到親子遊戲，一個晚上感受最日常的台東。</p>
+        <div class="mt-8 flex flex-wrap gap-3">
+          <a href={site.mapUrl} target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 rounded-full bg-lantern-400 px-6 py-3.5 font-black text-night-950 transition hover:-translate-y-0.5 hover:bg-lantern-300" data-ga-event="map_hero">
+            <svg aria-hidden="true" viewBox="0 0 24 24" class="size-5 fill-none stroke-current stroke-2"><path d="M12 21s6-5.4 6-12A6 6 0 0 0 6 9c0 6.6 6 12 6 12Z"/><circle cx="12" cy="9" r="2"/></svg>
+            導航到目前位置
+          </a>
+          <a href="/transport/" class="rounded-full border border-white/35 bg-white/10 px-6 py-3.5 font-bold backdrop-blur transition hover:bg-white/20">先看交通停車</a>
+        </div>
+        <p class="mt-5 text-xs text-white/55">首圖為四維夜市搬遷前場地實景；前往夜市請依本頁目前位置導航。</p>
+      </div>
+    </div>
+    <div class="container-site relative -mb-1 grid gap-px overflow-hidden rounded-t-3xl bg-white/10 grid-cols-2 sm:grid-cols-3 lg:grid-cols-6">
+      {visitFacts.map(({ label, value }) => (
+        <div class="bg-night-900/90 px-6 py-5 backdrop-blur">
+          <span class="block text-xs tracking-[.16em] text-lantern-300">{label}</span>
+          <strong class="mt-1 block text-lg">{value}</strong>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section id="status" class="bg-night-950 pb-20 pt-10 text-white">
+    <div class="container-site">
+      <div class="grid overflow-hidden rounded-3xl border border-lantern-300/20 bg-night-900 lg:grid-cols-[1.2fr_.8fr]">
+        <div class="p-7 sm:p-10">
+          <div class="mb-6 inline-flex items-center gap-2 rounded-full border border-lantern-300/25 bg-lantern-300/8 px-4 py-2 text-sm font-bold text-lantern-300">
+            <svg aria-hidden="true" viewBox="0 0 24 24" class="size-4 fill-none stroke-current stroke-2"><path d="M12 21s6-5.4 6-12A6 6 0 0 0 6 9c0 6.6 6 12 6 12Z"/><circle cx="12" cy="9" r="2"/></svg>
+            目前位置提醒
+          </div>
+          <h2 class="serif-tc max-w-2xl text-3xl font-black leading-tight sm:text-4xl">四維夜市現在在「四維路底」</h2>
+          <p class="mt-5 max-w-2xl leading-8 text-white/70">
+            請導航至 <strong class="text-white">四維路底、TAITUNG 英文字母地標附近</strong>。若搜尋結果仍指向四維路一段，那是搬遷前的舊址；抵達前請以本頁 Google 地圖位置為準。
+          </p>
+          <div class="mt-7 flex flex-wrap gap-3">
+            <a href={site.mapUrl} target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 rounded-full bg-lantern-400 px-6 py-3.5 text-sm font-black text-night-950 transition hover:-translate-y-0.5 hover:bg-lantern-300" data-ga-event="map_status">
+              導航到四維夜市目前位置
+              <svg aria-hidden="true" viewBox="0 0 24 24" class="size-4 fill-none stroke-current stroke-2"><path d="M5 12h14M14 7l5 5-5 5"/></svg>
+            </a>
+            <a href={site.officialNoticeUrl} target="_blank" rel="noopener noreferrer" class="inline-flex items-center rounded-full border border-white/20 px-6 py-3.5 text-sm font-bold text-white transition hover:border-white/40 hover:bg-white/5">查看當週公告</a>
+          </div>
+          <div class="mt-7 flex items-start gap-3 border-t border-white/10 pt-5 text-sm text-white/50">
+            <svg aria-hidden="true" viewBox="0 0 24 24" class="mt-0.5 size-4 shrink-0 fill-none stroke-lantern-300 stroke-2"><path d="M3 11.5 12 4l9 7.5M5 10v9h14v-9"/></svg>
+            <p><span class="font-bold text-white/75">附近地標</span><span class="mx-2 text-white/20">｜</span>台東海濱公園・TAITUNG 英文字母</p>
+          </div>
+        </div>
+        <div class="lantern-dots flex min-h-72 flex-col justify-center border-t border-white/10 bg-night-800 p-7 sm:p-10 lg:border-l lg:border-t-0">
+          <p class="text-xs font-bold tracking-[.18em] text-lantern-300">依例行時間推估</p>
+          <div id="market-status" class="mt-3 text-3xl font-black" aria-live="polite">正在讀取台灣時間…</div>
+          <p id="market-status-note" class="mt-3 leading-7 text-white/65">實際是否開市仍受天候與現場安排影響。</p>
+          <p id="taiwan-time" class="mt-6 text-sm text-white/40"></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-space paper-grid">
+    <div class="container-site">
+      <div class="grid gap-12 lg:grid-cols-[.85fr_1.15fr] lg:items-center">
+        <div>
+          <p class="eyebrow">LOCAL SUNDAY NIGHT</p>
+          <h2 class="serif-tc mt-4 text-4xl font-black leading-tight text-night-950 sm:text-5xl">它不是精緻商場，<br />而是台東人的週日晚餐</h2>
+          <div class="prose-readable mt-7 space-y-5 text-slate-700">
+            <p>四維夜市屬於典型的臺灣流動夜市。週日傍晚，餐車、帳棚、遊戲攤與生活雜貨陸續就位，形成一晚限定的街區。</p>
+            <p>這裡最值得體驗的不是只追一間名店，而是先吃一份主食、和同行者分炸物，再帶著飲料逛遊戲攤。節奏放慢一點，會比趕著打卡更像真正的四維夜市。</p>
+          </div>
+          <div class="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-2">
+            {['在地小吃', '鐵板牛排', '親子遊戲', '生活雜貨'].map((item, i) => (
+              <div class="rounded-2xl border border-night-900/10 bg-white p-4 font-bold text-night-900 shadow-sm"><span class="mr-2 text-lantern-500">0{i + 1}</span>{item}</div>
+            ))}
+          </div>
+        </div>
+        <figure class="relative">
+          <div class="absolute -left-4 -top-4 hidden size-28 rounded-full border-[18px] border-lantern-400/30 lg:block"></div>
+          <img src="/images/siwei-night-market-grill.webp" alt="四維夜市舊場地烤物攤位與逛街人潮" width="1147" height="860" loading="lazy" class="relative aspect-[4/3] w-full rounded-[2rem] object-cover shadow-2xl shadow-night-950/15" />
+          <figcaption class="mt-3 text-sm text-slate-500">四維夜市搬遷前的實景紀錄，呈現傳統流動夜市氛圍。</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section id="food" class="section-space overflow-hidden bg-rice-100">
+    <div class="container-site">
+      <div class="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <p class="eyebrow">WHAT TO EAT</p>
+          <h2 class="serif-tc mt-3 text-4xl font-black text-night-950 sm:text-5xl">2026 人氣美食線索</h2>
+          <p class="mt-4 max-w-2xl leading-7 text-slate-600">以下整理自 2026 年夜市人氣票選名單，適合作為找攤方向；流動攤販不保證每週固定出攤，也不代表永久排名。</p>
+        </div>
+        <span class="w-fit rounded-full border border-market-500/20 bg-white px-4 py-2 text-sm font-bold text-market-600">10 個找攤方向</span>
+      </div>
+
+      <div class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+        {foods.map((food, index) => (
+          <article class="group rounded-3xl border border-night-900/8 bg-white p-5 transition hover:-translate-y-1 hover:shadow-xl hover:shadow-night-950/8">
+            <div class="flex items-center justify-between">
+              <span class="text-3xl font-black text-lantern-400/75">{String(index + 1).padStart(2, '0')}</span>
+              <span class="rounded-full bg-rice-100 px-2.5 py-1 text-xs font-bold text-market-600">{food.type}</span>
+            </div>
+            <h3 class="mt-6 text-lg font-black text-night-950">{food.name}</h3>
+            <p class="mt-3 text-sm leading-6 text-slate-600">{food.note}</p>
+            <div class="mt-5 flex flex-wrap gap-2 border-t border-slate-100 pt-4 text-xs font-bold">
+              <span class="rounded-full bg-night-950 px-2.5 py-1 text-white">{food.round}</span>
+              <span class="rounded-full bg-rice-100 px-2.5 py-1 text-night-900">{food.bestFor}</span>
+            </div>
+          </article>
+        ))}
+      </div>
+
+      <div class="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        {visitSteps.map(({ step, title, copy }, index) => (
+          <article class:list={['rounded-3xl p-7', index === 0 || index === 2 ? 'bg-night-900 text-white' : index === 1 ? 'bg-market-600 text-white' : 'bg-lantern-400 text-night-950']}>
+            <span class:list={['text-sm font-black', index === 3 ? 'text-market-600' : 'text-lantern-300']}>{step}</span>
+            <h3 class="mt-2 text-xl font-black">{title}</h3>
+            <p class:list={['mt-3 text-sm leading-7', index === 3 ? 'text-night-950/70' : 'text-white/70']}>{copy}</p>
+          </article>
+        ))}
+      </div>
+      <div class="mt-8 text-center"><a href="/food/" class="inline-flex items-center gap-2 rounded-full border border-night-900/15 bg-white px-6 py-3 font-black text-night-950 transition hover:border-market-500/40 hover:text-market-600">查看完整美食指南 <span aria-hidden="true">→</span></a></div>
+    </div>
+  </section>
+
+  <section class="section-space bg-night-950 text-white">
+    <div class="container-site grid gap-5 md:grid-cols-2">
+      <figure class="group overflow-hidden rounded-[2rem] bg-night-900">
+        <div class="overflow-hidden"><img src="/images/siwei-night-market-food.webp" alt="四維夜市舊場地烤玉米與小吃攤實景" width="1147" height="860" loading="lazy" class="aspect-[4/3] w-full object-cover transition duration-700 group-hover:scale-105" /></div>
+        <figcaption class="p-6"><strong class="block text-xl">邊走邊吃的夜市節奏</strong><span class="mt-2 block text-sm text-white/50">舊場地實景紀錄，攤位與位置可能變動。</span></figcaption>
+      </figure>
+      <figure class="group overflow-hidden rounded-[2rem] bg-night-900 md:translate-y-12">
+        <div class="overflow-hidden"><img src="/images/siwei-night-market-family-games.webp" alt="四維夜市舊場地親子遊戲攤實景" width="1147" height="860" loading="lazy" class="aspect-[4/3] w-full object-cover transition duration-700 group-hover:scale-105" /></div>
+        <figcaption class="p-6"><strong class="block text-xl">吃完還能玩一輪</strong><span class="mt-2 block text-sm text-white/50">傳統遊戲是四維夜市的重要特色。</span></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section id="transport" class="section-space bg-white">
+    <div class="container-site">
+      <div class="grid gap-12 lg:grid-cols-[1fr_1fr] lg:items-start">
+        <div>
+          <p class="eyebrow">GETTING THERE</p>
+          <h2 class="serif-tc mt-3 text-4xl font-black text-night-950 sm:text-5xl">導航、停車與回程</h2>
+          <p class="mt-5 max-w-xl leading-8 text-slate-600">最重要的是不要只照舊文章的門牌走。直接以本頁座標或「四維路底 TAITUNG 字母地標」作為目的地。</p>
+
+          <div class="mt-9 space-y-4">
+            {transportTips.map(({ num, title, copy }) => (
+              <article class="grid grid-cols-[3rem_1fr] gap-4 rounded-2xl border border-slate-200 p-5">
+                <span class="font-black text-lantern-500">{num}</span>
+                <div><h3 class="font-black text-night-950">{title}</h3><p class="mt-2 text-sm leading-6 text-slate-600">{copy}</p></div>
+              </article>
+            ))}
+          </div>
+          <a href="/transport/" class="mt-7 inline-flex items-center gap-2 font-black text-market-600 hover:text-market-500">查看完整交通與停車指南 <span aria-hidden="true">→</span></a>
+        </div>
+
+        <div class="sticky top-28 overflow-hidden rounded-[2rem] bg-night-900 text-white shadow-2xl shadow-night-950/15">
+          <div class="border-b border-white/10 bg-night-800 px-7 py-6">
+            <p class="text-xs font-bold tracking-[.18em] text-lantern-300">CURRENT LOCATION</p>
+            <h3 class="mt-2 text-2xl font-black">四維路底</h3>
+            <p class="mt-1 text-sm text-white/60">TAITUNG 英文字母地標附近</p>
+          </div>
+          <iframe
+            src={site.mapEmbedUrl}
+            title="四維夜市 Google 地圖"
+            width="600"
+            height="450"
+            class="block aspect-[4/3] h-auto w-full border-0 sm:aspect-[16/10]"
+            style="border:0;"
+            allowfullscreen
+            loading="lazy"
+            referrerpolicy="strict-origin-when-cross-origin"
+          ></iframe>
+          <div class="p-7">
+            <div class="grid grid-cols-2 gap-3 text-sm">
+              <div class="rounded-xl bg-white/6 p-4"><span class="block text-white/45">緯度</span><strong class="mt-1 block">{site.latitude}</strong></div>
+              <div class="rounded-xl bg-white/6 p-4"><span class="block text-white/45">經度</span><strong class="mt-1 block">{site.longitude}</strong></div>
+            </div>
+            <a href={site.mapUrl} target="_blank" rel="noopener noreferrer" class="mt-5 block rounded-xl bg-lantern-400 px-5 py-4 text-center font-black text-night-950" data-ga-event="map_transport">用 Google 地圖導航</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="nearby" class="section-space bg-rice-100">
+    <div class="container-site">
+      <div class="mx-auto max-w-3xl text-center">
+        <p class="eyebrow">BEFORE THE MARKET</p>
+        <h2 class="serif-tc mt-3 text-4xl font-black text-night-950 sm:text-5xl">把週日下午排成一條順路行程</h2>
+        <p class="mt-5 leading-8 text-slate-600">下午先看森林與海，傍晚再進夜市。行程集中在台東市區，不必為了塞景點一直開車。</p>
+      </div>
+      <div class="mt-12 grid gap-6 lg:grid-cols-2">
+        <article class="overflow-hidden rounded-[2rem] bg-white shadow-sm">
+          <img src="/images/taitung-forest-park.webp" alt="台東森林公園的湖泊與自行車道實景" width="1350" height="1800" loading="lazy" class="aspect-[16/10] w-full object-cover" />
+          <div class="p-7"><span class="text-sm font-bold text-market-600">15:30–17:00</span><h3 class="mt-2 text-2xl font-black text-night-950">台東森林公園</h3><p class="mt-3 leading-7 text-slate-600">以散步或自行車暖身，不必一次走完整座園區，保留體力給晚上的夜市。</p></div>
+        </article>
+        <article class="overflow-hidden rounded-[2rem] bg-white shadow-sm">
+          <img src="/images/taitung-seaside-park.webp" alt="台東海濱公園海岸景觀實景" width="1800" height="1350" loading="lazy" class="aspect-[16/10] w-full object-cover" />
+          <div class="p-7"><span class="text-sm font-bold text-market-600">17:00–18:00</span><h3 class="mt-2 text-2xl font-black text-night-950">台東海濱公園</h3><p class="mt-3 leading-7 text-slate-600">先看海、拍照並確認停車位置，天色轉暗後再步行到四維路底逛夜市。</p></div>
+        </article>
+      </div>
+      <div class="mt-8 grid gap-3 rounded-3xl bg-night-900 p-5 text-white sm:grid-cols-4 sm:p-7">
+        {[
+          ['15:30', '森林公園'], ['17:00', '海濱公園'], ['18:00', '四維夜市'], ['20:30', '海邊散步']
+        ].map(([time, label], i) => (
+          <div class="relative rounded-2xl bg-white/6 p-5"><span class="text-sm font-black text-lantern-300">{time}</span><strong class="mt-2 block">{label}</strong>{i < 3 && <span class="absolute -right-2 top-1/2 hidden -translate-y-1/2 text-lantern-400 sm:block">→</span>}</div>
+        ))}
+      </div>
+      <div class="mt-8 grid gap-4 md:grid-cols-3">
+        {routePlans.map((route) => (
+          <article class="rounded-2xl border border-night-900/10 bg-white p-5">
+            <p class="text-xs font-black tracking-[.15em] text-market-600">{route.audience}</p>
+            <h3 class="mt-2 text-xl font-black text-night-950">{route.name}</h3>
+            <p class="mt-3 text-sm leading-6 text-slate-600">{route.stops.map(([time, stop]) => `${time} ${stop}`).join(' → ')}</p>
+          </article>
+        ))}
+      </div>
+      <div class="mt-8 text-center"><a href="/nearby/" class="inline-flex items-center gap-2 font-black text-market-600 hover:text-market-500">比較三種半日行程 <span aria-hidden="true">→</span></a></div>
+    </div>
+  </section>
+
+  <section class="section-space bg-white">
+    <div class="container-site">
+      <div class="grid gap-12 lg:grid-cols-[.75fr_1.25fr] lg:items-center">
+        <div>
+          <p class="eyebrow">GOOD TO KNOW</p>
+          <h2 class="serif-tc mt-3 text-4xl font-black text-night-950">帶小孩也能好好逛</h2>
+          <p class="mt-5 leading-8 text-slate-600">四維夜市不只吃東西，傳統遊戲與玩具攤讓親子家庭能停留更久。目前位置靠海，仍要把安全和天候放在第一位。</p>
+          <ul class="mt-7 space-y-3">
+            {['人多時牽好孩子，先約定走散集合點', '遊戲前先問價格、次數與得獎規則', '推車可走，但尖峰時段建議放慢速度', '入場後先確認公廁與停車位置', '海風較強時替孩子準備薄外套'].map((item) => (
+              <li class="flex gap-3 rounded-xl bg-rice-100 px-4 py-3 text-sm font-medium text-night-900"><span class="text-market-600">✓</span>{item}</li>
+            ))}
+          </ul>
+        </div>
+        <div class="grid grid-cols-2 gap-4">
+          <img src="/images/taitung-night-market-games.webp" alt="台東夜市傳統遊戲攤位實景" width="1800" height="1350" loading="lazy" class="aspect-[3/4] h-full w-full rounded-[2rem] object-cover" />
+          <img src="/images/taitung-night-market-food-stalls.webp" alt="台東夜市小吃攤與用餐人潮實景" width="1800" height="1350" loading="lazy" class="mt-12 aspect-[3/4] h-full w-full rounded-[2rem] object-cover" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq" class="section-space bg-night-950 text-white">
+    <div class="container-site grid gap-12 lg:grid-cols-[.75fr_1.25fr]">
+      <div>
+        <p class="text-xs font-black tracking-[.18em] text-lantern-300">FAQ</p>
+        <h2 class="serif-tc mt-3 text-4xl font-black sm:text-5xl">出發前最常問的事</h2>
+        <p class="mt-5 leading-8 text-white/60">時間、位置與攤位都可能變動。本頁提供行程判斷，不把例行時間包裝成即時官方資訊。</p>
+      </div>
+      <div class="divide-y divide-white/10 border-y border-white/10">
+        {faqs.map(([question, answer], i) => (
+          <details class="group py-1" open={i === 0}>
+            <summary class="flex cursor-pointer list-none items-center justify-between gap-5 py-5 font-black marker:content-none">
+              <span>{question}</span>
+              <span class="grid size-8 shrink-0 place-items-center rounded-full border border-white/15 text-lantern-300 transition group-open:rotate-45">＋</span>
+            </summary>
+            <p class="max-w-3xl pb-6 pr-10 leading-8 text-white/60">{answer}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="relative overflow-hidden bg-lantern-400 py-16 text-night-950">
+    <div class="absolute inset-0 lantern-dots opacity-40"></div>
+    <div class="container-site relative flex flex-col gap-7 sm:flex-row sm:items-center sm:justify-between">
+      <div><p class="text-sm font-black text-market-600">SUNDAY IN TAITUNG</p><h2 class="serif-tc mt-2 text-3xl font-black sm:text-4xl">週日晚上，就往海邊這一站。</h2><p class="mt-3 text-night-950/65">導航前再確認日期與天候，帶著現金慢慢逛。</p></div>
+      <a href={site.mapUrl} target="_blank" rel="noopener noreferrer" class="shrink-0 rounded-full bg-night-950 px-7 py-4 text-center font-black text-white" data-ga-event="map_cta">開啟四維夜市地圖</a>
+    </div>
+  </section>
+
+  <script is:inline>
+    (() => {
+      const status = document.getElementById('market-status');
+      const note = document.getElementById('market-status-note');
+      const timeEl = document.getElementById('taiwan-time');
+      if (!status || !note || !timeEl) return;
+      const parts = new Intl.DateTimeFormat('zh-TW', {
+        timeZone: 'Asia/Taipei', weekday: 'short', hour: '2-digit', minute: '2-digit', hourCycle: 'h23'
+      }).formatToParts(new Date());
+      const get = (type) => parts.find((p) => p.type === type)?.value || '';
+      const weekday = get('weekday');
+      const hour = Number(get('hour'));
+      const minute = get('minute');
+      const isSunday = weekday.includes('日');
+      if (isSunday && hour >= 18 && hour < 23) {
+        status.textContent = '今晚可能正在營業';
+        note.textContent = '目前落在週日常見營業時段，實際仍以現場與當週公告為準。';
+      } else if (isSunday && hour < 18) {
+        status.textContent = '今天是例行營業日';
+        note.textContent = '建議傍晚 18:00 左右抵達，先確認天候與當週公告。';
+      } else if (isSunday) {
+        status.textContent = '今晚多數攤位可能已收攤';
+        note.textContent = '不同攤位收攤時間不一，晚到不保證仍有完整攤位。';
+      } else {
+        status.textContent = '下一個例行營業日：週日';
+        note.textContent = '四維夜市不是每日營業，安排行程時請先確認星期。';
+      }
+      timeEl.textContent = `台灣時間：${weekday} ${String(hour).padStart(2, '0')}:${minute}`;
+    })();
+  </script>
+</BaseLayout>

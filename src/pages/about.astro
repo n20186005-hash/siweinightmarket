@@ -1,0 +1,19 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import { site } from '../data/site';
+---
+<BaseLayout title="關於本站與照片來源｜四維夜市" description="四維夜市獨立旅遊指南的編輯原則、資訊更新方式與照片來源。">
+  <section class="bg-night-950 py-20 text-white"><div class="container-site max-w-4xl"><Breadcrumbs dark items={[{ label: '關於本站' }]} /><p class="mt-10 text-xs font-black tracking-[.18em] text-lantern-300">ABOUT THIS GUIDE</p><h1 class="serif-tc mt-3 text-4xl font-black sm:text-6xl">關於本站</h1><p class="mt-6 max-w-2xl text-lg leading-8 text-white/65">本站以「出發前真正需要知道什麼」為編輯核心，整理四維夜市的目前位置、營業日、交通與逛法，不代表夜市或攤販協會發言。</p></div></section>
+  <section class="section-space bg-rice-50"><div class="container-site max-w-4xl space-y-12">
+    <article><h2 class="text-2xl font-black text-night-950">資訊原則</h2><div class="prose-readable mt-5 space-y-4 text-slate-700"><p>本站會定期檢查重要位置、營業日與交通資訊，並依可取得的最新資訊更新內容。</p><p>夜市屬於露天流動場域，攤位、價格、營業時間與交通安排都可能臨時調整。本站不以日期程式直接宣稱「確定營業」，也不保證列出的攤位每週出現。</p></div></article>
+    <article><h2 class="text-2xl font-black text-night-950">資訊來源與修正順序</h2><div class="prose-readable mt-5 space-y-4 text-slate-700"><p>目前位置以 Google 地圖地點頁與座標交叉核對；營業異動則優先參考夜市公開社群公告。本站內部保留來源與檢查紀錄，但不以公開核對日期製造「永遠最新」的錯覺。</p><p>若資訊衝突，優先修正會造成白跑、走錯地址或回程困難的內容，再處理攤位與行程細節。</p></div><div class="mt-5 flex flex-wrap gap-3"><a href={site.mapUrl} target="_blank" rel="noopener noreferrer" class="rounded-full bg-lantern-400 px-5 py-3 text-sm font-black text-night-950">查看目前地圖</a><a href={site.officialNoticeUrl} target="_blank" rel="noopener noreferrer" class="rounded-full border border-night-900/15 bg-white px-5 py-3 text-sm font-black text-night-950">查看公開公告</a></div></article>
+    <article><h2 class="text-2xl font-black text-night-950">照片使用說明</h2><div class="prose-readable mt-5 space-y-4 text-slate-700"><p>首頁的四維夜市照片為搬遷前舊場地實景，保留原照片浮水印並明確標示用途，不用來證明目前位置的現場環境。</p><p>正式商業上線前，站方應取得四維夜市實景照片權利人的書面授權，或替換為自行拍攝照片。專案內另附 <code>PHOTO_RIGHTS.md</code>，列出待確認項目。</p></div></article>
+    <article><h2 class="text-2xl font-black text-night-950">開放授權照片</h2><ul class="mt-5 space-y-4 text-sm leading-7 text-slate-700">
+      <li><strong>台東海濱公園：</strong> lienyuan lee，Wikimedia Commons，CC BY 3.0。</li>
+      <li><strong>台東森林公園：</strong> Joe Wu，Wikimedia Commons，CC BY 2.0。</li>
+      <li><strong>台東夜市街景與遊戲攤：</strong> Eric Deng，Wikimedia Commons，CC BY-SA 4.0。</li>
+    </ul><p class="mt-5 text-sm text-slate-500">為減少干擾，本站前台不在每個區塊放置外部連結；完整來源網址保留於專案的照片權利文件。</p></article>
+    <article class="rounded-3xl bg-white p-7"><h2 class="text-xl font-black text-night-950">網站身份聲明</h2><p class="mt-3 leading-7 text-slate-600">{site.domain} 是獨立旅遊資訊網站，並非四維夜市、臺東縣政府、臺東市公所或台東市攤販協會官方網站。</p></article>
+  </div></section>
+</BaseLayout>

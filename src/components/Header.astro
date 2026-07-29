@@ -1,0 +1,25 @@
+---
+import { site } from '../data/site';
+---
+<header class="sticky top-0 z-50 border-b border-white/10 bg-night-950/94 text-white backdrop-blur-xl">
+  <div class="container-site flex h-[4.75rem] items-center justify-between gap-5">
+    <a href="/" class="flex items-center gap-3" aria-label="四維夜市首頁">
+      <span class="grid size-10 place-items-center rounded-full bg-lantern-400 font-black text-night-950">四</span>
+      <span>
+        <span class="block text-base font-black tracking-[.12em]">四維夜市</span>
+        <span class="block text-[10px] tracking-[.18em] text-lantern-300">TAITUNG · SUNDAY</span>
+      </span>
+    </a>
+    <nav class="hidden items-center gap-7 text-sm font-medium lg:flex" aria-label="主要導覽">
+      <a class="hover:text-lantern-300" href="/#status">目前位置</a>
+      <a class="hover:text-lantern-300" href="/food/">人氣美食</a>
+      <a class="hover:text-lantern-300" href="/transport/">交通停車</a>
+      <a class="hover:text-lantern-300" href="/nearby/">周邊行程</a>
+      <a class="hover:text-lantern-300" href="/#faq">常見問題</a>
+    </nav>
+    <a href={site.mapUrl} target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 rounded-full bg-lantern-400 px-4 py-2.5 text-sm font-black text-night-950 transition hover:bg-lantern-300" data-ga-event="map_header">
+      <svg aria-hidden="true" viewBox="0 0 24 24" class="size-4 fill-none stroke-current stroke-2"><path d="M12 21s6-5.4 6-12A6 6 0 0 0 6 9c0 6.6 6 12 6 12Z"/><circle cx="12" cy="9" r="2"/></svg>
+      開啟地圖
+    </a>
+  </div>
+</header>
