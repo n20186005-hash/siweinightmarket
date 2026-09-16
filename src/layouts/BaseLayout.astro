@@ -8,13 +8,15 @@ interface Props {
   title?: string;
   description?: string;
   image?: string;
+  imageAlt?: string;
   noindex?: boolean;
 }
 
 const {
-  title = '台東四維夜市｜週日限定美食、目前位置、停車與交通指南',
+  title = site.seoTitle,
   description = site.description,
   image = '/og.jpg',
+  imageAlt = `${site.fullName}－${site.state}${site.city}四維路底的週日夜市`,
   noindex = false
 } = Astro.props;
 const canonical = new URL(Astro.url.pathname, site.url).toString();
@@ -32,6 +34,14 @@ const absoluteImage = new URL(image, site.url).toString();
     <link rel="canonical" href={canonical} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="manifest" href="/site.webmanifest" />
+    <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="四維夜市" />
+    <meta name="geo.region" content="TW" />
+    <meta name="geo.placename" content={`${site.state}${site.city}`} />
+    <meta name="geo.position" content={`${site.latitude};${site.longitude}`} />
+    <meta name="ICBM" content={`${site.latitude}, ${site.longitude}`} />
     <meta property="og:locale" content="zh_TW" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="四維夜市" />
@@ -39,6 +49,7 @@ const absoluteImage = new URL(image, site.url).toString();
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={absoluteImage} />
+    <meta property="og:image:alt" content={imageAlt} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta name="twitter:card" content="summary_large_image" />
@@ -59,5 +70,12 @@ const absoluteImage = new URL(image, site.url).toString();
     <Header />
     <main id="main"><slot /></main>
     <Footer />
+    <script is:inline>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js').catch(() => {});
+        });
+      }
+    </script>
   </body>
 </html>

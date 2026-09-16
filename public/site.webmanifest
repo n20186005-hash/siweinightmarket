@@ -1,11 +1,19 @@
 {
   "name": "台東四維夜市",
   "short_name": "四維夜市",
-  "description": "台東週日限定夜市行前指南",
+  "description": "台東週日限定夜市行前指南：目前位置、營業日、美食、停車與周邊行程。",
+  "lang": "zh-Hant-TW",
+  "dir": "ltr",
   "start_url": "/",
+  "scope": "/",
   "display": "standalone",
+  "orientation": "portrait",
   "background_color": "#fffaf0",
   "theme_color": "#07111f",
-  "lang": "zh-Hant-TW",
-  "icons": [{ "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml" }]
+  "categories": ["travel", "tourism", "food"],
+  "icons": [
+    { "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
 }

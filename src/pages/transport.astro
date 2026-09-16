@@ -1,14 +1,14 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
-import { site, transportTips } from '../data/site';
+import { site, transportTips, parkingOptions, openingHours } from '../data/site';
 
 const jsonLd = {
   '@context': 'https://schema.org',
   '@graph': [
     {
       '@type': 'WebPage',
-      name: '四維夜市交通與停車指南',
+      name: '台東四維夜市停車場與交通指南',
       url: `${site.url}/transport/`,
       about: { '@id': `${site.url}/#attraction` },
       inLanguage: 'zh-Hant-TW'
@@ -23,7 +23,7 @@ const jsonLd = {
   ]
 };
 ---
-<BaseLayout title="四維夜市交通與停車｜四維路底目前位置導航" description="台東四維夜市目前位於四維路底、TAITUNG 英文字母地標附近。查看精確地圖、停車思路、晚間回程與天候提醒。">
+<BaseLayout title="台東四維夜市停車場與交通指南｜四維路底導航、汽機車停車" description="台東四維夜市沒有專用停車場。整理四維路底目前位置與導航座標、海濱公園周邊汽車機車停車方式、入口臨停地雷與晚間回程提醒。">
   <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   <section class="bg-night-950 py-16 text-white sm:py-20">
     <div class="container-site max-w-5xl">
@@ -70,7 +70,27 @@ const jsonLd = {
     </div>
   </section>
 
-  <section class="section-space bg-white">
+  <section id="parking" class="section-space bg-white">
+    <div class="container-site">
+      <div class="max-w-2xl">
+        <p class="eyebrow">PARKING</p>
+        <h2 class="serif-tc mt-3 text-3xl font-black text-night-950 sm:text-5xl">四維夜市停車場與停車方式</h2>
+        <p class="mt-5 leading-8 text-slate-600">四維夜市屬流動型夜市，攤區周邊沒有固定的專用停車場。多數人會停在台東海濱公園、TAITUNG 英文字母地標周邊的路邊與公有停車空間，再步行進入四維路底。以下為類型中立的停車判斷，本站不推薦特定收費停車場。</p>
+      </div>
+      <div class="mt-10 grid gap-5 md:grid-cols-2">
+        {parkingOptions.map((p, i) => (
+          <article class="rounded-3xl border border-slate-200 p-6">
+            <span class="text-sm font-black text-lantern-500">P{String(i + 1).padStart(2, '0')}</span>
+            <h3 class="mt-2 text-xl font-black text-night-950">{p.title}</h3>
+            <p class="mt-3 leading-7 text-slate-600">{p.note}</p>
+          </article>
+        ))}
+      </div>
+      <p class="mt-6 rounded-2xl bg-rice-100 p-5 text-sm leading-7 text-night-900"><span class="font-black">尖峰提醒｜</span>四維夜市每週日限定，常見時段約 {openingHours.opens}–{openingHours.closes}；週日傍晚車位最緊張，建議 {openingHours.arrive} 前抵達並先停好車再進場。</p>
+    </div>
+  </section>
+
+  <section class="section-space bg-rice-100">
     <div class="container-site">
       <div class="max-w-2xl">
         <p class="eyebrow">HOW TO ARRIVE</p>
@@ -87,7 +107,7 @@ const jsonLd = {
     </div>
   </section>
 
-  <section class="section-space bg-rice-100">
+  <section class="section-space bg-white">
     <div class="container-site grid gap-8 lg:grid-cols-[1fr_.9fr]">
       <div>
         <p class="eyebrow">RETURN CHECKLIST</p>

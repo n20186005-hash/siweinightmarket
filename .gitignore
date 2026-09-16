@@ -1,6 +1,35 @@
+# ===== 手動部署到 Cloudflare Workers 時，不需要上傳的檔案 =====
+# 部署指令為 wrangler deploy（會讀取本機建置後的 dist/ 與進入點），
+# 下列檔案僅供開發與建置，請勿隨專案上傳。
+
+# 相依套件（部署端會自行安裝 / 或只上傳 dist）
 node_modules/
+
+# 建置產物（由 wrangler 自行產生並上傳）
 dist/
 .astro/
 .wrangler/
+
+# 環境變數 / 機密（切勿上傳）
 .dev.vars
+.env
+.env.*
+!.env.example
+
+# 日誌與暫存
+*.log
+npm-debug.log*
+pnpm-debug.log*
+build.log
+check.log
+.dev/
+.cache/
+
+# 編輯器 / 系統檔案
+.vscode/
+.idea/
 .DS_Store
+Thumbs.db
+
+# 測試與覆蓋率（若有）
+coverage/

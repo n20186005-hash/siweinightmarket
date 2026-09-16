@@ -5,16 +5,29 @@ import { foods, site, visitSteps } from '../data/site';
 
 const jsonLd = {
   '@context': 'https://schema.org',
-  '@type': 'BreadcrumbList',
-  itemListElement: [
-    { '@type': 'ListItem', position: 1, name: '首頁', item: site.url },
-    { '@type': 'ListItem', position: 2, name: '美食指南', item: `${site.url}/food/` }
+  '@graph': [
+    {
+      '@type': 'WebPage',
+      '@id': `${site.url}/food/#webpage`,
+      url: `${site.url}/food/`,
+      name: '台東四維夜市必吃美食｜10 個人氣攤位推薦與逛吃順序',
+      description: '台東四維夜市必吃美食清單：10 個人氣攤位涵蓋主食、鐵板、炸物、甜點與飲品，並提供先吃主食、共享炸物、甜點飲料收尾的逛吃順序與現金準備提醒。',
+      inLanguage: 'zh-Hant',
+      isPartOf: { '@type': 'WebSite', '@id': `${site.url}/#website` }
+    },
+    {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: '首頁', item: site.url },
+        { '@type': 'ListItem', position: 2, name: '美食指南', item: `${site.url}/food/` }
+      ]
+    }
   ]
 };
 
 const groups = ['主食', '鐵板', '小吃', '炸物', '甜點', '飲品'];
 ---
-<BaseLayout title="四維夜市美食指南｜主食、炸物、甜點怎麼吃" description="整理台東四維夜市的美食選擇與逛吃順序，從主食、分食炸物到甜點飲料，幫你安排一晚的胃口。">
+<BaseLayout title="台東四維夜市必吃美食｜10 個人氣攤位推薦與逛吃順序" description="台東四維夜市必吃美食清單：10 個人氣攤位涵蓋主食、鐵板、炸物、甜點與飲品，並提供先吃主食、共享炸物、甜點飲料收尾的逛吃順序與現金準備提醒。">
   <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   <section class="bg-night-950 py-16 text-white sm:py-20">
     <div class="container-site max-w-5xl">
@@ -86,7 +99,10 @@ const groups = ['主食', '鐵板', '小吃', '炸物', '甜點', '飲品'];
         <p class="text-xs font-black tracking-[.16em] text-market-600">BEFORE YOU GO</p>
         <h2 class="mt-3 text-2xl font-black">出發前先確認當週狀況</h2>
         <p class="mt-4 leading-7 text-night-950/70">露天夜市可能受天候或活動調整影響。若你是為特定攤位前往，建議直接查找該攤公開資訊，不要只依靠歷年食記。</p>
-        <a href={site.officialNoticeUrl} target="_blank" rel="noopener noreferrer" class="mt-6 inline-flex rounded-full bg-night-950 px-5 py-3 text-sm font-black text-white">查看夜市公開公告</a>
+        <div class="mt-6 flex flex-wrap gap-3">
+          <a href={site.officialNoticeUrl} target="_blank" rel="noopener noreferrer" class="inline-flex rounded-full bg-night-950 px-5 py-3 text-sm font-black text-white">查看夜市公開公告</a>
+          <a href="/transport/#parking" class="inline-flex rounded-full border border-night-950/25 px-5 py-3 text-sm font-black text-night-950 transition hover:border-market-500/50 hover:text-market-600">先看停車與交通</a>
+        </div>
       </article>
     </div>
   </section>

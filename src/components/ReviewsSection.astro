@@ -1,0 +1,72 @@
+---
+import { googleRating, reviewHighlights, site } from '../data/site';
+
+const stars = Array.from({ length: 5 }, (_, i) => i < Math.round(googleRating.ratingValue));
+---
+
+<section id="reviews" class="section-space bg-rice-100">
+  <div class="container-site">
+    <div class="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+      <div>
+        <p class="eyebrow">GOOGLE MAPS REVIEWS</p>
+        <h2 class="serif-tc mt-3 text-4xl font-black text-night-950 sm:text-5xl">四維夜市的 Google 地圖評價</h2>
+        <p class="mt-4 max-w-2xl leading-7 text-slate-600">以下評分與評價數為引用內容，完整評論仍以 Google 地圖地點頁為準；本頁只做重點歸納，不逐字轉載個別評論。</p>
+      </div>
+      <span class="w-fit rounded-full border border-market-500/20 bg-white px-4 py-2 text-sm font-bold text-market-600">{googleRating.category}・{site.city}</span>
+    </div>
+
+    <div class="mt-10 grid gap-6 lg:grid-cols-[.9fr_1.1fr]">
+      <div class="rounded-[2rem] bg-night-950 p-7 text-white sm:p-9">
+        <p class="text-xs font-black tracking-[.18em] text-lantern-300">GOOGLE 地圖評分</p>
+        <div class="mt-4 flex items-end gap-4">
+          <strong class="serif-tc text-6xl font-black leading-none">{googleRating.ratingText}</strong>
+          <div class="pb-1">
+            <div class="flex items-center gap-1" role="img" aria-label={`Google 地圖評分 ${googleRating.ratingText} 分，滿分 5 分`}>
+              {stars.map((filled) => (
+                <svg aria-hidden="true" viewBox="0 0 24 24" class:list={['size-5', filled ? 'fill-lantern-400' : 'fill-white/20']}>
+                  <path d="M12 2.5l2.9 5.9 6.5.95-4.7 4.6 1.1 6.45L12 17.35 6.2 20.4l1.1-6.45-4.7-4.6 6.5-.95L12 2.5Z" />
+                </svg>
+              ))}
+            </div>
+            <p class="mt-2 text-sm text-white/60">{googleRating.reviewCountText} 則用戶評價</p>
+          </div>
+        </div>
+
+        <dl class="mt-7 grid gap-3 text-sm sm:grid-cols-2">
+          <div class="rounded-xl bg-white/6 p-4"><dt class="text-white/45">景點分類</dt><dd class="mt-1 font-bold">{googleRating.category}</dd></div>
+          <div class="rounded-xl bg-white/6 p-4"><dt class="text-white/45">地點代碼</dt><dd class="mt-1 font-bold">Q536+Q6 {site.city} {site.country}{site.state}</dd></div>
+        </dl>
+
+        <p class="mt-6 text-xs leading-6 text-white/55">
+          {googleRating.inlineNote}
+          <a href={googleRating.url} target="_blank" rel="noopener noreferrer" class="font-bold text-lantern-300 underline decoration-lantern-300/40 underline-offset-2 hover:text-lantern-400" data-ga-event="reviews_inline_source">{googleRating.inlineLinkText}</a>
+        </p>
+        <p class="mt-2 text-xs leading-6 text-white/45">{googleRating.sourceNote}</p>
+
+        <a href={googleRating.url} target="_blank" rel="noopener noreferrer" class="mt-6 flex items-center justify-center gap-2 rounded-full bg-lantern-400 px-6 py-3.5 text-center text-sm font-black text-night-950 transition hover:-translate-y-0.5 hover:bg-lantern-300" data-ga-event="reviews_cta">
+          {googleRating.ctaText}
+          <svg aria-hidden="true" viewBox="0 0 24 24" class="size-4 fill-none stroke-current stroke-2"><path d="M7 17 17 7M9 7h8v8" /></svg>
+        </a>
+      </div>
+
+      <div>
+        <div class="rounded-[2rem] border border-night-900/8 bg-white p-7">
+          <h3 class="text-xl font-black text-night-950">Google 地圖評價重點歸納</h3>
+          <p class="mt-2 text-sm leading-6 text-slate-500">依 Google 地圖公開評價整理的主題摘要，非逐字引用個別評論。</p>
+          <ul class="mt-6 space-y-4">
+            {reviewHighlights.map(({ theme, summary }) => (
+              <li class="rounded-2xl bg-rice-50 p-5">
+                <p class="flex items-center gap-2 font-black text-night-950"><span aria-hidden="true" class="text-lantern-500">★</span>{theme}</p>
+                <p class="mt-2 text-sm leading-7 text-slate-600">{summary}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <p class="mt-4 px-2 text-xs leading-6 text-slate-500">
+          評價來源：{googleRating.sourceLabel}・同步時間 {googleRating.syncedAt}。
+          <a href={googleRating.url} target="_blank" rel="noopener noreferrer" class="font-bold text-market-600 hover:text-market-500">{googleRating.ctaText}</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
