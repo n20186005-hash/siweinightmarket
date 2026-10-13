@@ -8,9 +8,9 @@ export const site = {
   category: '夜市',
   domain: 'SiweiNightMarket.com',
   url: 'https://siweinightmarket.com',
-  description: '每週日限定的台東四維夜市怎麼玩？整理營業時間（約 18:00–22:30）、10 個必吃美食攤位與逛吃順序、四維路底位置導航、汽機車停車與交通，以及海濱公園周邊順遊行程。',
+  description: '台東四維夜市每週日晚上營業，目前暫遷至四維路底、TAITUNG 字母地標附近。整理營業時間、最新地圖導航、停車資訊及人氣美食，出發前先確認當週公告。',
   /** 首頁與全站預設的 SEO 標題（以實際搜尋用語「台東」在前） */
-  seoTitle: '台東四維夜市｜每週日限定！營業時間、必吃美食與停車交通指南',
+  seoTitle: '台東四維夜市｜週日營業時間、搬遷新址、停車與必吃美食',
   city: '臺東市',
   state: '臺東縣',
   country: '臺灣',
@@ -32,6 +32,9 @@ export const site = {
   ga4: 'G-HXM22WWPKP'
 } as const;
 
+/** 本網站資訊最後核實月份，供頁面與來源區標示 */
+export const lastVerified = '2026 年 10 月';
+
 /** 周邊核心地標（語義集群用） */
 export const nearbyLandmarks = [
   { name: '台東海濱公園', note: '看海與拍照的傍晚據點，也是前往四維路底前確認停車的好位置。' },
@@ -45,16 +48,16 @@ export const nearbyLandmarks = [
 export const googleRating = {
   ratingValue: 4,
   ratingText: '4.0',
-  reviewCount: 5401,
-  reviewCountText: '5,401',
+  reviewCount: 5430,
+  reviewCountText: '5,430',
   category: '夜市',
-  syncedAt: '2026 年 9 月',
+  syncedAt: '2026 年 10 月',
   sourceLabel: '谷歌地圖（Google Maps）用戶評價',
   /** 評分與評價數來源小字（首頁評分下方） */
-  inlineNote: '評分與評價數同步自谷歌地圖（Google Maps）用戶評價 · 2026 年 9 月 · ',
+  inlineNote: '評分與評價數同步自谷歌地圖（Google Maps）用戶評價 · 2026 年 10 月 · ',
   inlineLinkText: '點擊查看谷歌地圖全部評價↗',
   /** 評價區塊來源說明 */
-  sourceNote: '同步自 Google 地圖用戶評價，同步時間 2026 年 9 月；版權歸原作者與 Google 地圖所有',
+  sourceNote: '同步自 Google 地圖用戶評價，同步時間 2026 年 10 月；版權歸原作者與 Google 地圖所有',
   ctaText: '在谷歌地圖查看全部評價',
   url: 'https://maps.app.goo.gl/tTzJq5528HNALb9C9'
 } as const;
@@ -179,7 +182,7 @@ export const faqs = [
   ['可以刷卡或行動支付嗎？', '各攤位收款方式不同，建議攜帶足夠現金，不要預設所有攤位都能刷卡。'],
   ['適合帶小孩嗎？', '適合。現場常有套圈圈、射氣球與彈珠類遊戲，但人多時要牽好兒童，消費前先問清楚規則與價格。'],
   ['四維夜市和台東觀光夜市一樣嗎？', '不一樣。四維夜市以週日為主，較偏在地生活與親子遊戲；台東觀光夜市位於正氣路，營業日與位置皆不同。'],
-  ['四維夜市在 Google 地圖上的評價如何？', 'Google 地圖顯示臺東市四維夜市為 4.0 分、5,401 則用戶評價（2026 年 9 月同步）。評價內容僅於本頁摘要呈現，完整評論請至 Google 地圖地點頁查看。'],
+  ['四維夜市在 Google 地圖上的評價如何？', 'Google 地圖顯示臺東市四維夜市為 4.0 分、5,430 則用戶評價（2026 年 10 月同步）。評價內容僅於本頁摘要呈現，完整評論請至 Google 地圖地點頁查看。'],
   ['Google 地圖地址是四維路一段464巷，為什麼要導航到四維路底？', 'Google 地圖地點頁登錄地址仍為 950 臺東縣臺東市四維路一段464巷；實際攤區位於四維路底、TAITUNG 英文字母地標附近。建議直接以本頁座標 22.7543813, 121.1605317 導航，不要只輸入舊門牌。'],
   ['四維夜市需要門票嗎？', '不需要。四維夜市為免費入場的露天夜市，各攤位餐飲與遊戲另依現場計價，建議攜帶現金。']
 ] as const;

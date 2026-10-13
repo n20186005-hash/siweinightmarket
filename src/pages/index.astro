@@ -3,7 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import ReviewsSection from '../components/ReviewsSection.astro';
 import SourcesSection from '../components/SourcesSection.astro';
 import WeatherModule from '../components/WeatherModule.astro';
-import { site, foods, faqs, visitFacts, visitSteps, transportTips, routePlans, nearbyLandmarks, googleRating, openingHours } from '../data/site';
+import { site, foods, faqs, visitFacts, visitSteps, transportTips, routePlans, nearbyLandmarks, googleRating, openingHours, lastVerified } from '../data/site';
 import { visitorServices, seasonPlan, audienceRoutes, itineraries, visitorResponsibility } from '../data/guide';
 
 const heroImage = `${site.url}/images/siwei-night-market-hero.webp`;
@@ -184,8 +184,12 @@ const jsonLd = {
             目前位置提醒
           </div>
           <h2 class="serif-tc max-w-2xl text-3xl font-black leading-tight sm:text-4xl">四維夜市現在在「四維路底」</h2>
+          <p class="mt-4 inline-flex flex-wrap items-center gap-2">
+            <span class="rounded-full bg-market-600 px-3 py-1 text-xs font-black text-white">暫時搬遷中</span>
+            <span class="text-xs text-white/55">最後核實：{lastVerified}</span>
+          </p>
           <p class="mt-5 max-w-2xl leading-8 text-white/70">
-            請導航至 <strong class="text-white">四維路底、TAITUNG 英文字母地標附近</strong>。若搜尋結果仍指向四維路一段，那是搬遷前的舊址；抵達前請以本頁 Google 地圖位置為準。
+            四維夜市為流動型夜市，現因場地調整<strong class="text-white">暫時遷至四維路底、TAITUNG 英文字母地標附近</strong>。若搜尋結果仍指向四維路一段，那是搬遷前的舊址；抵達前請以本頁 Google 地圖位置為準，並留意是否已公告遷回原址。
           </p>
           <div class="mt-7 flex flex-wrap gap-3">
             <a href={site.mapUrl} target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 rounded-full bg-lantern-400 px-6 py-3.5 text-sm font-black text-night-950 transition hover:-translate-y-0.5 hover:bg-lantern-300" data-ga-event="map_status">
