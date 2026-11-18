@@ -1,10 +1,10 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ReviewsSection from '../components/ReviewsSection.astro';
-import SourcesSection from '../components/SourcesSection.astro';
 import WeatherModule from '../components/WeatherModule.astro';
 import { site, foods, faqs, visitFacts, visitSteps, transportTips, routePlans, nearbyLandmarks, googleRating, openingHours, lastVerified } from '../data/site';
 import { visitorServices, seasonPlan, audienceRoutes, itineraries, visitorResponsibility } from '../data/guide';
+import { attractions } from '../data/attractions';
 
 const heroImage = `${site.url}/images/siwei-night-market-hero.webp`;
 const ogImage = `${site.url}/og.jpg`;
@@ -364,12 +364,15 @@ const jsonLd = {
       <div class="mt-12 grid gap-6 lg:grid-cols-2">
         <article class="overflow-hidden rounded-[2rem] bg-white shadow-sm">
           <img src="/images/taitung-forest-park.webp" alt="台東森林公園的湖泊與自行車道實景" width="1350" height="1800" loading="lazy" class="aspect-[16/10] w-full object-cover" />
-          <div class="p-7"><span class="text-sm font-bold text-market-600">15:30–17:00</span><h3 class="mt-2 text-2xl font-black text-night-950">台東森林公園</h3><p class="mt-3 leading-7 text-slate-600">以散步或自行車暖身，不必一次走完整座園區，保留體力給晚上的夜市。</p></div>
+          <div class="p-7"><span class="text-sm font-bold text-market-600">15:30–17:00</span><h3 class="mt-2 text-2xl font-black text-night-950"><a href="/attractions/taitung-forest-park/" class="hover:text-market-600">台東森林公園 →</a></h3><p class="mt-3 leading-7 text-slate-600">以散步或自行車暖身，不必一次走完整座園區，保留體力給晚上的夜市。</p></div>
         </article>
         <article class="overflow-hidden rounded-[2rem] bg-white shadow-sm">
           <img src="/images/taitung-seaside-park.webp" alt="台東海濱公園海岸景觀實景" width="1800" height="1350" loading="lazy" class="aspect-[16/10] w-full object-cover" />
-          <div class="p-7"><span class="text-sm font-bold text-market-600">17:00–18:00</span><h3 class="mt-2 text-2xl font-black text-night-950">台東海濱公園</h3><p class="mt-3 leading-7 text-slate-600">先看海、拍照並確認停車位置，天色轉暗後再步行到四維路底逛夜市。</p></div>
+          <div class="p-7"><span class="text-sm font-bold text-market-600">17:00–18:00</span><h3 class="mt-2 text-2xl font-black text-night-950"><a href="/attractions/taitung-seaside-park/" class="hover:text-market-600">台東海濱公園 →</a></h3><p class="mt-3 leading-7 text-slate-600">先看海、拍照並確認停車位置，天色轉暗後再步行到四維路底逛夜市。</p></div>
         </article>
+      </div>
+      <div class="mt-7 grid gap-5 md:grid-cols-2">
+        {attractions.slice(2).map((item) => <a href={`/attractions/${item.slug}/`} class="flex items-center gap-5 rounded-3xl border border-night-900/10 bg-white p-4 transition hover:border-market-600/50"><img src={item.image} alt={item.imageAlt} width="160" height="110" loading="lazy" class="h-28 w-32 shrink-0 rounded-2xl object-cover sm:w-40" /><div><h3 class="text-xl font-black text-night-950">{item.name}</h3><p class="mt-2 line-clamp-2 text-sm leading-6 text-slate-600">{item.lead}</p><span class="mt-2 inline-block text-sm font-black text-market-600">查看景點專頁 →</span></div></a>)}
       </div>
       <div class="mt-8 grid gap-3 rounded-3xl bg-night-900 p-5 text-white sm:grid-cols-4 sm:p-7">
         {[
@@ -387,7 +390,7 @@ const jsonLd = {
           </article>
         ))}
       </div>
-      <div class="mt-8 text-center"><a href="/nearby/" class="inline-flex items-center gap-2 font-black text-market-600 hover:text-market-500">比較三種半日行程 <span aria-hidden="true">→</span></a></div>
+      <div class="mt-8 flex flex-wrap justify-center gap-6"><a href="/nearby/#sunday-plan" class="inline-flex items-center gap-2 font-black text-market-600 hover:text-market-500">台東週日半日遊 →</a><a href="/taitung-night-markets/" class="inline-flex items-center gap-2 font-black text-market-600 hover:text-market-500">台東兩大夜市比較 →</a><a href="/relocation/" class="inline-flex items-center gap-2 font-black text-market-600 hover:text-market-500">四維夜市搬遷新址核對 →</a></div>
     </div>
   </section>
 
@@ -553,7 +556,6 @@ const jsonLd = {
     </div>
   </section>
 
-  <SourcesSection heading="資料來源與同步時間" />
 
   <section id="faq" class="section-space bg-night-950 text-white">
     <div class="container-site grid gap-12 lg:grid-cols-[.75fr_1.25fr]">

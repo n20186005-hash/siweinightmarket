@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
 import { routePlans, site } from '../data/site';
+import { attractions } from '../data/attractions';
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -42,13 +43,25 @@ const routeNotes = [
     </div>
   </section>
 
+  <section id="sunday-plan" class="section-space bg-rice-50"><div class="container-site">
+    <p class="eyebrow">SUNDAY AFTERNOON TO NIGHT</p><h2 class="serif-tc mt-3 text-3xl font-black text-night-950 sm:text-5xl">台東市區週日半日遊：森林、海岸、夜市</h2>
+    <p class="mt-5 max-w-3xl leading-8 text-slate-600">這份安排專門給週日下午抵達臺東市區、晚上想逛四維夜市的人。時間是可調整的行程建議，並非公園或夜市的即時開放保證。</p>
+    <ol class="mt-9 grid gap-5 md:grid-cols-4">
+      <li class="rounded-3xl bg-white p-6"><span class="font-black text-market-600">15:30 · 林蔭散步</span><h3 class="mt-3 text-xl font-black"><a href="/attractions/taitung-forest-park/" class="hover:text-market-600">臺東森林公園 →</a></h3><p class="mt-3 leading-7 text-slate-600">選一段林道或一處湖景；夏天補水，別為了走遍園區壓縮後面時間。</p></li>
+      <li class="rounded-3xl bg-white p-6"><span class="font-black text-market-600">17:00 · 傍晚看海</span><h3 class="mt-3 text-xl font-black"><a href="/attractions/taitung-seaside-park/" class="hover:text-market-600">臺東海濱公園 →</a></h3><p class="mt-3 leading-7 text-slate-600">順著海岸散步、看天色；強風大雨時縮短停留，不靠近危險岸際。</p></li>
+      <li class="rounded-3xl bg-white p-6"><span class="font-black text-market-600">18:00 · 先確認入口</span><h3 class="mt-3 text-xl font-black"><a href="/relocation/" class="hover:text-market-600">四維路底導航 →</a></h3><p class="mt-3 leading-7 text-slate-600">比對攤區公告與地標，先完成合法停車或接送安排，再步行進場。</p></li>
+      <li class="rounded-3xl bg-white p-6"><span class="font-black text-market-600">18:30–20:00 · 晚餐</span><h3 class="mt-3 text-xl font-black"><a href="/food/" class="hover:text-market-600">四維夜市必吃指南 →</a></h3><p class="mt-3 leading-7 text-slate-600">先主食後炸物甜點，同行者共享幾樣即可；保留返程時間。</p></li>
+    </ol>
+    <div class="mt-7 grid gap-5 md:grid-cols-2"><article class="rounded-3xl bg-white p-7"><h3 class="text-xl font-black">帶小孩或長輩</h3><p class="mt-3 leading-7 text-slate-600">把森林公園縮短為 30–45 分鐘，優先安排一處能坐下休息的景觀點；夜市人多時先約定集合位置。</p></article><article class="rounded-3xl bg-white p-7"><h3 class="text-xl font-black">下雨或不是週日</h3><p class="mt-3 leading-7 text-slate-600">雨大時不勉強海岸行程；若是週四至週六，可另外查詢<a href="/taitung-night-markets/" class="text-market-600 underline">正氣路臺東觀光夜市</a>，但不要把不同夜市當成同一個地點。</p></article></div>
+  </div></section>
+
   <section class="section-space bg-rice-50">
     <div class="container-site grid gap-6 lg:grid-cols-2">
       <article class="overflow-hidden rounded-[2rem] bg-white shadow-sm">
         <img src="/images/taitung-forest-park.webp" alt="台東森林公園湖泊與自行車道" width="1350" height="1800" class="aspect-[16/10] w-full object-cover" />
         <div class="p-7">
           <p class="text-xs font-black tracking-[.16em] text-market-600">FOREST</p>
-          <h2 class="mt-2 text-2xl font-black text-night-950">台東森林公園</h2>
+          <h2 class="mt-2 text-2xl font-black text-night-950"><a class="hover:text-market-600" href="/attractions/taitung-forest-park/">台東森林公園 →</a></h2>
           <p class="mt-4 leading-7 text-slate-600">下午以散步或自行車為主，不必一次走完整座園區。夏季注意補水，並為晚上的夜市保留體力。</p>
         </div>
       </article>
@@ -56,12 +69,17 @@ const routeNotes = [
         <img src="/images/taitung-seaside-park.webp" alt="台東海濱公園海岸景觀" width="1800" height="1350" class="aspect-[16/10] w-full object-cover" />
         <div class="p-7">
           <p class="text-xs font-black tracking-[.16em] text-market-600">SEASIDE</p>
-          <h2 class="mt-2 text-2xl font-black text-night-950">台東海濱公園</h2>
+          <h2 class="mt-2 text-2xl font-black text-night-950"><a class="hover:text-market-600" href="/attractions/taitung-seaside-park/">台東海濱公園 →</a></h2>
           <p class="mt-4 leading-7 text-slate-600">傍晚看海、確認停車位置，再步行前往四維路底。沿海風勢較明顯，天候不穩時縮短停留。</p>
         </div>
       </article>
     </div>
   </section>
+
+  <section class="section-space bg-white"><div class="container-site">
+    <p class="eyebrow">ATTRACTION GUIDES</p><h2 class="serif-tc mt-3 text-3xl font-black text-night-950">周邊景點詳情與獨立導航</h2>
+    <div class="mt-8 grid gap-5 md:grid-cols-2">{attractions.map((item) => <a href={`/attractions/${item.slug}/`} class="overflow-hidden rounded-3xl border border-slate-200 hover:border-market-600"><img src={item.image} alt={item.imageAlt} width="640" height="427" loading="lazy" class="aspect-[16/8] w-full object-cover"/><div class="p-6"><h3 class="text-xl font-black text-night-950">{item.name}</h3><p class="mt-3 leading-7 text-slate-600">{item.lead}</p><span class="mt-3 inline-block font-black text-market-600">閱讀景點指南 →</span></div></a>)}</div>
+  </div></section>
 
   <section class="section-space bg-white">
     <div class="container-site">

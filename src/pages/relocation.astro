@@ -1,0 +1,21 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import { site, openingHours } from '../data/site';
+const faq = [
+  ['四維夜市搬去哪裡？', '本站既有位置資訊將攤區標示於四維路底、臺東海濱公園與 TAITUNG 英文字母地標附近；現場位置可能調整，出發前務必比對當週公告與 Google 地圖。'],
+  ['Google 地圖顯示四維路一段464巷，能直接去嗎？', '地圖登錄地址與目前攤區描述可能不同。請先核對頁面提供的座標及週日活動資訊，不要只依舊門牌導航。'],
+  ['星期日一定有夜市嗎？', '週日是例行營業日，但露天攤區可能受天候、施工、活動或臨時安排影響。']
+];
+const jsonLd = { '@context': 'https://schema.org', '@graph': [
+  { '@type': 'WebPage', name: '台東四維夜市搬遷新址與導航核對', url: `${site.url}/relocation/`, inLanguage: 'zh-Hant-TW', about: { '@id': `${site.url}/#attraction` } },
+  { '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: '首頁', item: site.url }, { '@type': 'ListItem', position: 2, name: '搬遷導航', item: `${site.url}/relocation/` }] },
+  { '@type': 'FAQPage', mainEntity: faq.map(([name, answer]) => ({ '@type': 'Question', name, acceptedAnswer: { '@type': 'Answer', text: answer } })) }
+] };
+---
+<BaseLayout title="台東四維夜市搬家了嗎？四維路底新址、地圖導航與週日營業核對" description="四維夜市新舊地點怎麼分？整理四維路底、TAITUNG 地標、Google 地圖登錄地址差異，以及週日出發前需要確認的事項。">
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  <section class="bg-night-950 py-16 text-white"><div class="container-site max-w-5xl"><Breadcrumbs dark items={[{ label: '搬遷導航' }]} /><p class="mt-10 text-xs font-black tracking-[.18em] text-lantern-300">LOCATION CHECK</p><h1 class="serif-tc mt-3 text-4xl font-black sm:text-6xl">四維夜市搬家了嗎？<br />先核對位置再出發</h1><p class="mt-6 max-w-3xl text-lg leading-8 text-white/70">搜尋結果仍可能出現舊地址。這篇幫你分辨地圖登錄地址、目前攤區描述與週日出攤資訊，避免導航到錯誤入口。</p></div></section>
+  <section class="section-space bg-rice-50"><div class="container-site max-w-5xl grid gap-7 md:grid-cols-2"><article class="rounded-3xl bg-white p-8"><p class="eyebrow">CURRENT AREA</p><h2 class="mt-3 text-2xl font-black">目前攤區描述</h2><p class="mt-4 leading-8">四維路底、臺東海濱公園與 TAITUNG 字母地標一帶。本站使用的座標為 {site.latitude}, {site.longitude}，這是導航參考點，不保證是每週固定入口。</p><a href={site.mapsShareUrl} target="_blank" rel="noopener noreferrer" class="mt-5 inline-flex rounded-full bg-lantern-400 px-5 py-3 font-black">開啟四維夜市 Google 地圖</a></article><article class="rounded-3xl bg-white p-8"><p class="eyebrow">REGISTERED ADDRESS</p><h2 class="mt-3 text-2xl font-black">Google 地圖登錄地址</h2><p class="mt-4 leading-8">{site.googleAddress}。這個登錄地址可能與夜市當週實際攤區不一致；請勿只憑門牌判斷入口。</p><a href="/transport/" class="mt-5 inline-flex font-black text-market-600 underline">查看停車與交通注意事項 →</a></article></div></section>
+  <section class="section-space bg-white"><div class="container-site max-w-5xl"><h2 class="serif-tc text-3xl font-black">週日出發前的三步核對</h2><ol class="mt-7 grid gap-5 md:grid-cols-3"><li class="rounded-2xl bg-rice-50 p-6"><strong>01 · 查當週公告</strong><p class="mt-3 leading-7">到<a href={site.officialNoticeUrl} target="_blank" rel="noopener noreferrer" class="text-market-600 underline">公告來源</a>查看活動、天候或臨時調整。</p></li><li class="rounded-2xl bg-rice-50 p-6"><strong>02 · 比對地標</strong><p class="mt-3 leading-7">以四維路底和海濱公園作為位置比對，避免依過時遊記找入口。</p></li><li class="rounded-2xl bg-rice-50 p-6"><strong>03 · 安排回程</strong><p class="mt-3 leading-7">預先選擇合法停車位置或夜間接送方式，不在攤車動線臨停。</p></li></ol><h2 class="serif-tc mt-12 text-3xl font-black">營業時間與入場</h2><p class="mt-4 leading-8">例行營業日為每週日，常見時段約 {openingHours.opens}–{openingHours.closes}，免費入場；個別攤位開收與費用不同，不能把例行時段當成當週即時開市保證。</p><h2 class="serif-tc mt-12 text-3xl font-black">常見問題</h2><div class="mt-5 space-y-4">{faq.map(([q, a]) => <details class="rounded-2xl border border-slate-200 p-5"><summary class="cursor-pointer font-black">{q}</summary><p class="mt-3 leading-7">{a}</p></details>)}</div><p class="mt-10 text-sm leading-7 text-slate-500">位置資料沿用本站現有地圖登錄資料；本頁未聲稱已於 2026 年 11 月重新核實現場。請以當週公告及現場指標為準。</p></div></section>
+</BaseLayout>

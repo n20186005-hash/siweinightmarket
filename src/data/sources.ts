@@ -3,19 +3,19 @@ export const editorialSources = [
     topic: '評價',
     source: 'Google 地圖（Google Maps）用戶評價',
     url: 'https://maps.app.goo.gl/tTzJq5528HNALb9C9',
-    checkedAt: '2026 年 10 月',
+    checkedAt: '2026 年 11 月 18 日',
     visibility: 'public-link',
     linkText: '在谷歌地圖查看全部評價',
-    note: '同步自 Google 地圖用戶評價，同步時間 2026 年 10 月；版權歸原作者與 Google 地圖所有'
+    note: '同步自 Google 地圖用戶評價，同步時間 2026 年 11 月 18 日；版權歸原作者與 Google 地圖所有'
   },
   {
     topic: '評分與評價數',
-    source: 'Google 地圖地點頁（4.0 分／5,430 則）',
+    source: 'Google 地圖地點頁（4.0 分／5,473 則）',
     url: 'https://maps.app.goo.gl/tTzJq5528HNALb9C9',
-    checkedAt: '2026 年 10 月',
+    checkedAt: '2026 年 11 月 18 日',
     visibility: 'public-link',
     linkText: '在谷歌地圖查看全部評價',
-    note: '同步自 Google 地圖用戶評價，同步時間 2026 年 10 月；版權歸原作者與 Google 地圖所有'
+    note: '同步自 Google 地圖用戶評價，同步時間 2026 年 11 月 18 日；版權歸原作者與 Google 地圖所有'
   },
   {
     topic: '目前位置與地圖座標',

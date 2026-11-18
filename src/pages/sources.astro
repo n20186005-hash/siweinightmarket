@@ -1,0 +1,10 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import SourcesSection from '../components/SourcesSection.astro';
+---
+<BaseLayout title="資料來源與同步時間｜四維夜市" description="四維夜市評分、地圖、觀光與照片資訊的來源及同步日期。">
+  <section class="bg-night-950 py-16 text-white sm:py-20"><div class="container-site max-w-4xl"><Breadcrumbs dark items={[{ label: '資料來源' }]} /><h1 class="serif-tc mt-10 text-4xl font-black sm:text-6xl">資料來源</h1><p class="mt-5 leading-7 text-white/65">公開資料與核對日期集中於此，方便出發前查看。</p></div></section>
+  <SourcesSection heading="資料來源與同步時間" />
+  <div class="container-site pb-16"><a href="/" class="font-black text-market-600 underline">返回四維夜市首頁</a></div>
+</BaseLayout>

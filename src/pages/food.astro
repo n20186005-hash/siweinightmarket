@@ -33,12 +33,22 @@ const groups = ['主食', '鐵板', '小吃', '炸物', '甜點', '飲品'];
     <div class="container-site max-w-5xl">
       <Breadcrumbs dark items={[{ label: '美食指南' }]} />
       <p class="mt-10 text-xs font-black tracking-[.18em] text-lantern-300">FOOD GUIDE</p>
-      <h1 class="serif-tc mt-3 max-w-3xl text-4xl font-black leading-tight sm:text-6xl">不用一次吃完，<br />照順序更能吃到重點</h1>
+      <h1 class="serif-tc mt-3 max-w-3xl text-4xl font-black leading-tight sm:text-6xl">台東四維夜市必吃美食<br />10 種找攤方向</h1>
       <p class="mt-6 max-w-2xl text-lg leading-8 text-white/65">先選一份主食，再和同行者共享炸物，最後用甜點飲料收尾。這份指南提供找攤方向，不把流動攤位寫成每週固定名單。</p>
     </div>
   </section>
 
-  <section class="section-space bg-rice-50">
+  <section class="section-space bg-white"><div class="container-site">
+    <p class="eyebrow">FOOD DECISION GUIDE</p><h2 class="serif-tc mt-3 text-3xl font-black text-night-950">第一次來，先決定想吃哪一類</h2>
+    <div class="mt-8 grid gap-5 md:grid-cols-3">
+      <article class="rounded-3xl bg-rice-50 p-7"><h3 class="text-xl font-black">想吃一頓正餐</h3><p class="mt-3 leading-7 text-slate-600">先找牛排、肉蛋堡或肉夾饃。一人選一份主食，再視食量分享其他小吃；不要把所有主食當成必須吃完的清單。</p><a href="#food-list" class="mt-4 inline-block font-black text-market-600 underline">看攤位選擇 →</a></article>
+      <article class="rounded-3xl bg-rice-50 p-7"><h3 class="text-xl font-black">兩三人一起逛</h3><p class="mt-3 leading-7 text-slate-600">香酥雞、臭豆腐與炸魷魚等炸物適合分食，先比對當晚份量與價格，留胃口給不同口味。</p><a href="#food-list" class="mt-4 inline-block font-black text-market-600 underline">看分享小吃 →</a></article>
+      <article class="rounded-3xl bg-rice-50 p-7"><h3 class="text-xl font-black">親子與少量點心</h3><p class="mt-3 leading-7 text-slate-600">可把地瓜球、可麗餅、飲品放到後段；想玩遊戲則預先分配餐飲與遊戲預算，先問清價格。</p><a href="/nearby/#sunday-plan" class="mt-4 inline-block font-black text-market-600 underline">安排週日半日遊 →</a></article>
+    </div>
+    <div class="mt-8 rounded-3xl border border-lantern-400/40 bg-lantern-400/10 p-6"><h3 class="font-black text-night-950">名單怎麼看？</h3><p class="mt-2 leading-7 text-slate-600">這是依餐點類型整理的找攤指南，不是即時出攤保證、價格排行榜或官方得獎名次。「2026 台東四維夜市十大名攤」曾舉辦人氣票選活動，但本文不把參選或報導名單直接宣稱為最終得獎結果。當晚仍以攤位現場為準。</p><a href="https://hoomedia.com.tw/2026/07/05/152295/" target="_blank" rel="noopener noreferrer" class="mt-3 inline-block text-sm font-black text-market-600 underline">查看 2026 票選活動報導 →</a></div>
+  </div></section>
+
+  <section id="food-list" class="section-space bg-rice-50">
     <div class="container-site">
       <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
         {visitSteps.map(({ step, title, copy }) => (

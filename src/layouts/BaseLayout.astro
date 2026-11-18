@@ -57,12 +57,19 @@ const absoluteImage = new URL(image, site.url).toString();
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={absoluteImage} />
     <title>{title}</title>
-    <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${site.ga4}`}></script>
     <script is:inline define:vars={{ ga4: site.ga4 }}>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', ga4, { anonymize_ip: true });
+      try {
+        if (localStorage.getItem('siwei-analytics-consent') === 'yes') {
+          window.dataLayer = window.dataLayer || [];
+          window.gtag = function () { window.dataLayer.push(arguments); };
+          window.gtag('js', new Date());
+          window.gtag('config', ga4, { anonymize_ip: true });
+          const script = document.createElement('script');
+          script.async = true;
+          script.src = `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(ga4)}`;
+          document.head.appendChild(script);
+        }
+      } catch (_) { /* 私密瀏覽或封鎖儲存時，不啟用選用追蹤。 */ }
     </script>
   </head>
   <body>

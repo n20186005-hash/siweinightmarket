@@ -1,0 +1,58 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import { attractions } from '../../data/attractions';
+import { site } from '../../data/site';
+
+const slug = Astro.params.slug;
+const attraction = attractions.find((item) => item.slug === slug);
+if (!attraction) return Astro.rewrite('/404');
+const pageUrl = `${site.url}/attractions/${attraction.slug}/`;
+const description = `${attraction.name}遊覽指南：景觀特色、散步時間、交通、拍攝建議、注意事項與四維夜市半日遊串聯。`;
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    { '@type': 'TouristAttraction', name: attraction.name, alternateName: attraction.english, url: pageUrl, description: attraction.lead, image: `${site.url}${attraction.image}`, hasMap: attraction.map, address: { '@type': 'PostalAddress', streetAddress: attraction.address.replace('950 臺東縣臺東市',''), addressLocality: '臺東市', addressRegion: '臺東縣', postalCode: '950', addressCountry: 'TW' }, ...(attraction.coordinates ? { geo: { '@type': 'GeoCoordinates', latitude: attraction.coordinates.latitude, longitude: attraction.coordinates.longitude } } : {}) },
+    { '@type': 'BreadcrumbList', itemListElement: [
+      { '@type': 'ListItem', position: 1, name: '首頁', item: site.url },
+      { '@type': 'ListItem', position: 2, name: '周邊景點', item: `${site.url}/nearby/` },
+      { '@type': 'ListItem', position: 3, name: attraction.name, item: pageUrl }
+    ] },
+    { '@type': 'FAQPage', mainEntity: attraction.faq.map(([name, answer]) => ({ '@type': 'Question', name, acceptedAnswer: { '@type': 'Answer', text: answer } })) }
+  ]
+};
+---
+<BaseLayout title={`${attraction.name}｜景觀、交通、散步路線與四維夜市順遊`} description={description} image={attraction.image} imageAlt={attraction.imageAlt}>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  <section class="bg-night-950 py-16 text-white sm:py-20">
+    <div class="container-site max-w-5xl">
+      <Breadcrumbs dark items={[{ label: '周邊景點', href: '/nearby/' }, { label: attraction.name }]} />
+      <p class="mt-10 text-xs font-black tracking-[.18em] text-lantern-300">TAITUNG ATTRACTIONS</p>
+      <h1 class="serif-tc mt-3 text-4xl font-black sm:text-6xl">{attraction.name}</h1>
+      <p class="mt-3 text-lantern-300">{attraction.english} · {attraction.category} · {attraction.hours}</p>
+      <p class="mt-6 max-w-3xl text-lg leading-8 text-white/75">{attraction.lead}</p>
+      <div class="mt-7 flex flex-wrap gap-3"><a href={attraction.map} target="_blank" rel="noopener noreferrer" class="rounded-full bg-lantern-400 px-6 py-3 font-black text-night-950">查看專屬 Google 地圖</a><a href="/nearby/#sunday-plan" class="rounded-full border border-white/30 px-6 py-3 font-bold">週日半日遊行程</a></div>
+    </div>
+  </section>
+  <section class="section-space bg-rice-50"><div class="container-site grid gap-9 lg:grid-cols-[1.15fr_1fr] lg:items-center">
+    <img src={attraction.image} alt={attraction.imageAlt} width="1350" height="1000" class="aspect-[4/3] w-full rounded-3xl object-cover" loading="lazy" />
+    <div><p class="eyebrow">EXPLORE</p><h2 class="serif-tc mt-3 text-3xl font-black text-night-950">探索{attraction.name}</h2><p class="mt-5 leading-8 text-slate-600">{attraction.history}</p><h3 class="mt-7 text-xl font-black">遊覽建議</h3><p class="mt-2 leading-8 text-slate-600">{attraction.visit}</p><h3 class="mt-5 text-xl font-black">景區特色</h3><p class="mt-2 leading-8 text-slate-600">{attraction.scenery}</p></div>
+    <div class="rounded-3xl border border-market-600/15 bg-white p-7 lg:col-span-2"><p class="eyebrow">ABOUT & MANAGEMENT</p><h2 class="serif-tc mt-3 text-3xl font-black text-night-950">關於{attraction.name}</h2><p class="mt-4 max-w-4xl leading-8 text-slate-600">{attraction.managerDetails}</p><div class="mt-5 flex flex-wrap items-center gap-3"><span class="rounded-full bg-rice-100 px-4 py-2 text-sm font-black text-night-950">管理維護：{attraction.manager}</span><a class="text-sm font-bold text-market-600 underline" href={attraction.source} target="_blank" rel="noopener noreferrer">查看主管機關及景點資料 →</a></div></div>
+  </div></section>
+  <section class="section-space bg-white"><div class="container-site max-w-5xl">
+    <h2 class="serif-tc text-3xl font-black text-night-950">基本資料</h2>
+    <dl class="mt-5 grid gap-4 sm:grid-cols-2"><div class="rounded-2xl bg-rice-50 p-5"><dt class="text-sm text-slate-500">景點名稱</dt><dd class="mt-1 font-black">{attraction.name}</dd></div><div class="rounded-2xl bg-rice-50 p-5"><dt class="text-sm text-slate-500">地址</dt><dd class="mt-1 font-black">{attraction.address}</dd></div><div class="rounded-2xl bg-rice-50 p-5"><dt class="text-sm text-slate-500">類型／管理</dt><dd class="mt-1 font-black">{attraction.category}／{attraction.manager}</dd></div><div class="rounded-2xl bg-rice-50 p-5"><dt class="text-sm text-slate-500">建議時間</dt><dd class="mt-1 font-black">{attraction.visit.split('；')[0]}</dd></div><div class="rounded-2xl bg-rice-50 p-5"><dt class="text-sm text-slate-500">開放時間</dt><dd class="mt-1 font-black">{attraction.hours}</dd></div><div class="rounded-2xl bg-rice-50 p-5"><dt class="text-sm text-slate-500">入場費用</dt><dd class="mt-1">{attraction.admission}</dd></div><div class="rounded-2xl bg-rice-50 p-5"><dt class="text-sm text-slate-500">景點聯絡電話</dt><dd class="mt-1 font-black">{attraction.phone}</dd></div>{attraction.coordinates && <div class="rounded-2xl bg-rice-50 p-5"><dt class="text-sm text-slate-500">位置座標</dt><dd class="mt-1 font-black">{attraction.coordinates.latitude}, {attraction.coordinates.longitude}</dd></div>}</dl>
+    <div class="mt-12 grid gap-8 md:grid-cols-2"><section class="rounded-3xl bg-rice-50 p-7"><h2 class="serif-tc text-2xl font-black text-night-950">開放時間</h2><p class="mt-4 leading-8 text-slate-600">{attraction.hours}</p><p class="mt-3 text-sm leading-7 text-slate-500">特殊活動、臨時維修與個別設施可能調整，出發前請參照管理公告。</p></section><section class="rounded-3xl bg-rice-50 p-7"><h2 class="serif-tc text-2xl font-black text-night-950">門票價格</h2><p class="mt-4 leading-8 text-slate-600">{attraction.admission}</p><a href={attraction.accessSource} target="_blank" rel="noopener noreferrer" class="mt-3 inline-block text-sm font-black text-market-600 underline">查看相關公告 →</a></section></div>
+    <h2 class="serif-tc mt-12 text-3xl font-black text-night-950">交通方式</h2><h3 class="mt-5 text-xl font-black">自行開車與停車</h3><p class="mt-3 leading-8 text-slate-600">以 {attraction.address} 作為導航參考，抵達後依現場入口、停車及管制標示行動；大型活動日可能有交通調整。</p><h3 class="mt-5 text-xl font-black">自行車與大眾運輸</h3><p class="mt-3 leading-8 text-slate-600">{attraction.transport}</p><h3 class="mt-5 text-xl font-black">交通查詢</h3><p class="mt-3 leading-8 text-slate-600">公共運輸及騎乘路線可參照<a href="https://tour.taitung.gov.tw/zh-tw/tour/details/831" target="_blank" rel="noopener noreferrer" class="text-market-600 underline">臺東縣官方山海鐵馬道遊程</a>；勿將文章中的行程範例當作公車時刻表。</p>
+    <h2 class="serif-tc mt-12 text-3xl font-black text-night-950">路線地圖</h2><p class="mt-4 leading-8 text-slate-600">專屬 Google 地圖搜尋以景點名稱與地址組合，不會跳到四維夜市的定位；頁面座標來自公開觀光景點資料，實際入口請參照現場導覽。</p><a href={attraction.map} target="_blank" rel="noopener noreferrer" class="mt-5 inline-flex rounded-full bg-night-950 px-6 py-3 font-black text-white">開啟{attraction.name}地圖</a>
+    <h2 class="serif-tc mt-12 text-3xl font-black text-night-950">發現景點魅力</h2><h3 class="mt-5 text-xl font-black">歷史與環境</h3><p class="mt-3 leading-8 text-slate-600">{attraction.history}</p><h3 class="mt-5 text-xl font-black">景觀設計與工程</h3><p class="mt-3 leading-8 text-slate-600">{attraction.architecture}</p><h3 class="mt-5 text-xl font-black">核心體驗與觀察</h3><p class="mt-3 leading-8 text-slate-600">{attraction.scenery}</p>
+    <h2 class="serif-tc mt-12 text-3xl font-black text-night-950">遊覽路線</h2><ol class="mt-5 grid gap-4 md:grid-cols-3">{attraction.walkStops.map(([title, note], i) => <li class="rounded-2xl bg-rice-50 p-6"><strong>{String(i + 1).padStart(2,'0')} · {title}</strong><p class="mt-2 leading-7 text-slate-600">{note}</p></li>)}</ol>
+    <h2 class="serif-tc mt-12 text-3xl font-black text-night-950">拍照機位與觀察重點</h2><p class="mt-4 leading-8 text-slate-600">{attraction.photo}</p>
+    <div class="mt-8 grid gap-5 md:grid-cols-2"><figure class="overflow-hidden rounded-3xl border border-slate-200"><img src={attraction.image} alt={attraction.imageAlt} width="1350" height="1000" loading="lazy" class="aspect-[4/3] w-full object-cover" /><figcaption class="p-4 text-sm text-slate-500">{attraction.imageAlt} · <a href={attraction.source2} target="_blank" rel="noopener noreferrer" class="text-market-600 underline">景點資料</a></figcaption></figure>{attraction.extraImage && <figure class="overflow-hidden rounded-3xl border border-slate-200"><img src={attraction.extraImage} alt={attraction.extraImageAlt} width="640" height="427" loading="lazy" class="aspect-[4/3] w-full object-cover" /><figcaption class="p-4 text-sm text-slate-500">{attraction.extraImageAlt} · <a href={attraction.source2} target="_blank" rel="noopener noreferrer" class="text-market-600 underline">臺東觀光資料圖片來源</a></figcaption></figure>}</div>
+    <h2 class="serif-tc mt-12 text-3xl font-black text-night-950">遊覽須知</h2><ul class="mt-4 list-disc space-y-3 pl-6 leading-7 text-slate-600">{attraction.cautions.map((item) => <li>{item}</li>)}</ul>
+    <h2 class="serif-tc mt-12 text-3xl font-black text-night-950">常見問題</h2><div class="mt-5 space-y-4">{attraction.faq.map(([q, a]) => <details class="rounded-2xl border border-slate-200 p-5"><summary class="cursor-pointer font-black">{q}</summary><p class="mt-3 leading-7 text-slate-600">{a}</p></details>)}</div>
+    <div class="mt-12 grid gap-5 md:grid-cols-2"><article class="rounded-3xl bg-rice-50 p-7"><h2 class="text-xl font-black">住宿與半日遊安排</h2><p class="mt-3 leading-7 text-slate-600">若週日傍晚還要逛四維夜市，住宿可優先按臺東市區交通便利性、夜間回程及停車需求選擇；可先從區域、交通與實際需求篩選旅宿。</p><a href="/nearby/#sunday-plan" class="mt-4 inline-block font-black text-market-600 underline">查看週日半日行程 →</a></article><article class="rounded-3xl bg-rice-50 p-7"><h2 class="text-xl font-black">遊客評價與現場照片</h2><p class="mt-3 leading-7 text-slate-600">想了解近期參觀感受、活動和實景照片，可前往這個景點自己的 Google 地圖頁閱讀旅人評論；動態評價數與相片以地圖頁顯示為準。</p><a href={attraction.map} target="_blank" rel="noopener noreferrer" class="mt-4 inline-block font-black text-market-600 underline">查看該景點 Google 地圖 →</a></article></div>
+    <section class="mt-12 rounded-3xl bg-night-950 p-8 text-white"><h2 class="serif-tc text-3xl font-black">交通指南・地址與地圖</h2><p class="mt-4 text-lg leading-8 text-white/75">{attraction.address}</p><p class="mt-3 leading-7 text-white/65">{attraction.transport}</p><div class="mt-6 flex flex-wrap gap-3"><a href={attraction.map} target="_blank" rel="noopener noreferrer" class="rounded-full bg-lantern-400 px-6 py-3 font-black text-night-950">Google 地圖導航</a><a href="/nearby/" class="rounded-full border border-white/30 px-6 py-3 font-bold">更多周邊景點</a></div></section>
+    <div class="mt-12 rounded-2xl bg-rice-50 p-6"><h2 class="text-lg font-black">資料來源與出發前核對</h2><ul class="mt-3 list-disc space-y-2 pl-5 leading-7 text-slate-600"><li><a href={attraction.source} target="_blank" rel="noopener noreferrer" class="text-market-600 underline">主管機關景點背景資料</a></li><li><a href={attraction.source2} target="_blank" rel="noopener noreferrer" class="text-market-600 underline">公開觀光景點資料與地址</a></li><li><a href={attraction.accessSource} target="_blank" rel="noopener noreferrer" class="text-market-600 underline">開放、設施或景觀變動公告</a></li><li><a href={attraction.map} target="_blank" rel="noopener noreferrer" class="text-market-600 underline">在 Google 地圖查看景點</a></li></ul><p class="mt-3 text-sm text-slate-500">資料查閱：2026 年 11 月 18 日。活動、營運及交通異動請以現場資訊為準。</p></div>
+  </div></section>
+</BaseLayout>
